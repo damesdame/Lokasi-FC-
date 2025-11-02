@@ -149,6 +149,157 @@
     <p class="footer-title">Maka Lintas Utara</p>
     <p class="footer-subtitle">There is no place like home</p>
   </footer>
+<script>
+  // ================================
+  // 🔋 Data Lokasi Charger MLU
+  // ================================
+  const chargers = [
+    { name: "MAKA Showroom Kelapa Gading", lat: -6.159635, lng: 106.906682, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9" },
+    { name: "MAKA Showroom Radio Dalam", lat: -6.257621, lng: 106.802051, link: "https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6" },
+    { name: "MAKA Showroom Bekasi", lat: -6.243967, lng: 106.994823, link: "https://maps.app.goo.gl/4fdRXFebJHJW63Dg7" },
+    { name: "MAKA Showroom Gading Serpong", lat: -6.246792, lng: 106.629594, link: "https://maps.app.goo.gl/j5oeATswU7J9e9jj7" },
+    { name: "MAKA Showroom Depok", lat: -6.402484, lng: 106.794240, link: "https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7" },
+    { name: "MAKA Hotel Marbella Kemang Residence", lat: -6.260627, lng: 106.813746, link: "https://maps.app.goo.gl/2dEoMaxPMdvA5e356" },
+    { name: "Starvo PIK", lat: -6.111097, lng: 106.742471, link: "https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7" },
+    { name: "Starvo Kedoya", lat: -6.186334, lng: 106.766978, link: "https://maps.app.goo.gl/HSKbMPz5UrwW178V9" },
+    { name: "Lite Showroom MAKA Motors Ciledug", lat: -6.237947, lng: 106.708237, link: "https://maps.app.goo.gl/DSJiJyAW1BvL2Gwm8" },
+    { name: "Lite Showroom MAKA Motors Bintaro", lat: -6.276471, lng: 106.730544, link: "https://maps.app.goo.gl/yZNxoj2gyutxd4zJA" },
+    { name: "Motoriz Meruya", lat: -6.200132, lng: 106.737796, link: "https://share.google/kOj9qickp0gjlz7dr" },
+    { name: "Motoriz Kranggan", lat: -6.340640, lng: 106.943016, link: "https://share.google/sLjoO17xzc39ZyWKr" },
+    { name: "Warung Bu Ratna Cirendeu", lat: -6.310043, lng: 106.758325, link: "https://maps.app.goo.gl/7cK7Vr1qtS7YzpSH7" },
+    { name: "Klinik Pratama Condet", lat: -6.295322, lng: 106.863682, link: "https://maps.app.goo.gl/hTwbD4wEKB8g5qnU8" }
+  ];
 
+  // ================================
+  // 📍 Fungsi Menghitung Jarak
+  // ================================
+  function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(lat1 * Math.PI / 180) *
+      Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  // ================================
+  // ✨ Popup Neon
+  // ================================
+  const popup = document.createElement("div");
+  popup.style.position = "fixed";
+  popup.style.top = "50%";
+  popup.style.left = "50%";
+  popup.style.transform = "translate(-50%, -50%)";
+  popup.style.background = "rgba(10,25,47,0.95)";
+  popup.style.color = "#64ffda";
+  popup.style.padding = "25px 30px";
+  popup.style.border = "1px solid #64ffda";
+  popup.style.borderRadius = "15px";
+  popup.style.boxShadow = "0 0 20px rgba(100,255,218,0.7)";
+  popup.style.fontFamily = "Poppins, sans-serif";
+  popup.style.textAlign = "center";
+  popup.style.display = "none";
+  popup.style.zIndex = "9999";
+  popup.style.transition = "opacity 0.3s ease";
+  popup.style.opacity = "0";
+
+  const popupTitle = document.createElement("h3");
+  popupTitle.style.marginTop = "0";
+  popupTitle.style.marginBottom = "10px";
+  popupTitle.style.textShadow = "0 0 10px #64ffda";
+
+  const popupText = document.createElement("p");
+  popupText.style.margin = "0 0 15px 0";
+
+  const popupBtn = document.createElement("button");
+  popupBtn.innerText = "📍 Buka di Google Maps";
+  popupBtn.style.padding = "10px 20px";
+  popupBtn.style.border = "none";
+  popupBtn.style.borderRadius = "10px";
+  popupBtn.style.background = "#64ffda";
+  popupBtn.style.color = "#0a192f";
+  popupBtn.style.cursor = "pointer";
+  popupBtn.style.fontWeight = "600";
+  popupBtn.onclick = () => window.open(popupBtn.dataset.link, "_blank");
+
+  popup.appendChild(popupTitle);
+  popup.appendChild(popupText);
+  popup.appendChild(popupBtn);
+  document.body.appendChild(popup);
+
+  // ================================
+  // 🟢 Tombol Neon Cari Charger
+  // ================================
+  const btn = document.createElement("button");
+  btn.innerText = "📍 Temukan Charger Terdekat";
+  Object.assign(btn.style, {
+    padding: "14px 28px",
+    margin: "20px auto",
+    display: "block",
+    background: "transparent",
+    border: "2px solid #64ffda",
+    color: "#64ffda",
+    fontWeight: "600",
+    fontSize: "1em",
+    borderRadius: "12px",
+    cursor: "pointer",
+    textShadow: "0 0 8px #64ffda",
+    boxShadow: "0 0 15px rgba(100,255,218,0.5)",
+    transition: "0.3s"
+  });
+  btn.onmouseenter = () => {
+    btn.style.background = "#64ffda";
+    btn.style.color = "#0a192f";
+    btn.style.boxShadow = "0 0 25px rgba(100,255,218,0.9)";
+  };
+  btn.onmouseleave = () => {
+    btn.style.background = "transparent";
+    btn.style.color = "#64ffda";
+    btn.style.boxShadow = "0 0 15px rgba(100,255,218,0.5)";
+  };
+  document.querySelector("header").appendChild(btn);
+
+  // ================================
+  // 📡 Fungsi Cari Charger Terdekat
+  // ================================
+  function findNearest() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const { latitude, longitude } = pos.coords;
+        let nearest = chargers[0];
+        let minDist = getDistance(latitude, longitude, chargers[0].lat, chargers[0].lng);
+        chargers.forEach(charger => {
+          const dist = getDistance(latitude, longitude, charger.lat, charger.lng);
+          if (dist < minDist) {
+            minDist = dist;
+            nearest = charger;
+          }
+        });
+
+        popupTitle.innerText = "🔋 Charger Terdekat Ditemukan!";
+        popupText.innerText = `${nearest.name}\n📏 Jarak: ${minDist.toFixed(2)} km`;
+        popupBtn.dataset.link = nearest.link;
+
+        popup.style.display = "block";
+        setTimeout(() => popup.style.opacity = "1", 50);
+
+        setTimeout(() => {
+          popup.style.opacity = "0";
+          setTimeout(() => popup.style.display = "none", 400);
+        }, 8000); // popup hilang setelah 8 detik
+
+      }, () => alert("⚠️ Gagal mendeteksi lokasi. Pastikan izin lokasi aktif."));
+    } else {
+      alert("⚠️ Browser tidak mendukung deteksi lokasi.");
+    }
+  }
+
+  btn.onclick = findNearest;
+    </script>
+  
 </body>
 </html>
