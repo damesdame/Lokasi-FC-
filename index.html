@@ -161,12 +161,31 @@
       <a href="https://maps.app.goo.gl/Ca21HTW4uGDgoqWp8?g_st=ac" target="_blank">📍 Buka Navigasi</a>
     </div>
   </main>
-
   <footer>
     <p class="footer-title">Maka Lintas Utara</p>
     <p class="footer-subtitle">There is no place like home</p>
+   
+    <!-- Penghitung Viewers -->
+    <div id="viewerCount" style="
+      margin-top: 10px;
+      color:#64ffda;
+      font-weight:bold;
+      font-size: 0.95em;
+      text-shadow: 0 0 10px #64ffda;
+    ">
+      👀 Total Pengunjung: <span id="count">...</span>
+    </div>
   </footer>
-<script>
+
+  <!-- Script Penghitung Viewers -->
+  <script>
+    fetch('https://api.countapi.xyz/hit/mlu-charger/visits')
+      .then(res => res.json())
+      .then(res => {
+        document.getElementById('count').innerText = res.value.toLocaleString();
+      });
+  </script>
+  <script>
   // ================================
   // 🔋 Data Lokasi Charger MLU
   // ================================
