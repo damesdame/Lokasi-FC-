@@ -300,77 +300,113 @@
 
   btn.onclick = findNearest;
     </script>
-  <!-- Tombol Bantuan -->
-<button id="helpBtn" style="
-  position: fixed;
-  bottom: 140px;
-  right: 20px;
-  background: #64ffda;
-  color: #0a192f;
-  border: none;
-  border-radius: 50px;
-  padding: 12px 20px;
-  font-weight: bold;
-  box-shadow: 0 0 20px rgba(100,255,218,0.6);
-  cursor: pointer;
-  z-index: 1000;
-">🆘 </button>
+  <script>
+  // === Tambahkan tombol ke header ===
+  const header = document.querySelector("header");
+  const helpBtn = document.createElement("button");
+  helpBtn.id = "helpBtn";
+  helpBtn.innerHTML = "🆘 Bantuan";
 
-<!-- Panel Kontak -->
-<div id="helpPanel" style="
-  position: fixed;
-  top: 0;
-  right: -300px;
-  width: 260px;
-  height: 100%;
-  background: rgba(10,25,47,0.97);
-  box-shadow: -2px 0 15px rgba(100,255,218,0.4);
-  border-left: 1px solid #64ffda;
-  color: #e6f1ff;
-  padding: 20px;
-  transition: right 0.4s ease;
-  z-index: 999;
-  overflow-y: auto;
-  font-family: 'Poppins', sans-serif;
-">
-  <h3 style="color:#64ffda; text-shadow:0 0 10px #64ffda; margin-top:0;">Hubungi Bantuan</h3>
-  <p>Klik salah satu nomor di bawah ini untuk menghubungi via WhatsApp 👇</p>
-
-  <div style="text-align:left; margin-top:15px;">
-    <p>🏍️ <strong>Kendala Unit</strong><br>
-      <a href="https://wa.me/6287722285445?text=Halo%2C%20saya%20butuh%20bantuan%20towing" target="_blank" style="color:#64ffda; text-decoration:none;">+62-877-2228-5445</a>
-    </p>
-
-    <p>📞 <strong>Info Tagihan</strong><br>
-      <a href="https://wa.me/6285117468556?text=Halo%2C%20saya%20butuh%20informasi%20tentang%20tagihan" target="_blank" style="color:#64ffda; text-decoration:none;">+62 851-1746-8556</a>
-    </p>
-  </div>
-
-  <button id="closeHelp" style="
-    margin-top:20px;
-    background:transparent;
-    border:1px solid #64ffda;
-    color:#64ffda;
-    padding:8px 15px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:bold;
-    width:100%;
-  ">Tutup</button>
-</div>
-
-<script>
-  const helpBtn = document.getElementById('helpBtn');
-  const helpPanel = document.getElementById('helpPanel');
-  const closeHelp = document.getElementById('closeHelp');
-
-  helpBtn.addEventListener('click', () => {
-    helpPanel.style.right = helpPanel.style.right === '0px' ? '-300px' : '0px';
+  Object.assign(helpBtn.style, {
+    position: "absolute",
+    top: "25px",
+    right: "30px",
+    background: "#64ffda",
+    color: "#0a192f",
+    border: "none",
+    borderRadius: "25px",
+    padding: "10px 18px",
+    fontWeight: "bold",
+    fontFamily: "'Poppins', sans-serif",
+    cursor: "pointer",
+    boxShadow: "0 0 15px rgba(100,255,218,0.6)",
+    transition: "all 0.3s ease",
+    zIndex: "1000"
   });
 
-  closeHelp.addEventListener('click', () => {
-    helpPanel.style.right = '-300px';
+  helpBtn.onmouseenter = () => (helpBtn.style.boxShadow = "0 0 25px rgba(100,255,218,1)");
+  helpBtn.onmouseleave = () => (helpBtn.style.boxShadow = "0 0 15px rgba(100,255,218,0.6)");
+
+  header.style.position = "relative";
+  header.appendChild(helpBtn);
+
+  // === Responsif otomatis untuk HP ===
+  const adjustButtonPosition = () => {
+    if (window.innerWidth < 600) {
+      helpBtn.style.position = "static";
+      helpBtn.style.display = "block";
+      helpBtn.style.margin = "15px auto 0 auto";
+    } else {
+      helpBtn.style.position = "absolute";
+      helpBtn.style.top = "25px";
+      helpBtn.style.right = "30px";
+      helpBtn.style.margin = "0";
+    }
+  };
+  window.addEventListener("resize", adjustButtonPosition);
+  adjustButtonPosition();
+
+  // === Panel Bantuan ===
+  const helpPanel = document.createElement("div");
+  Object.assign(helpPanel.style, {
+    position: "fixed",
+    top: "0",
+    right: "-300px",
+    width: "260px",
+    height: "100%",
+    background: "rgba(10,25,47,0.97)",
+    boxShadow: "-2px 0 15px rgba(100,255,218,0.4)",
+    borderLeft: "1px solid #64ffda",
+    color: "#e6f1ff",
+    padding: "20px",
+    transition: "right 0.4s ease",
+    zIndex: "9999",
+    overflowY: "auto",
+    fontFamily: "'Poppins', sans-serif"
   });
-</script>
+
+  helpPanel.innerHTML = `
+    <h3 style="color:#64ffda;text-shadow:0 0 10px #64ffda;margin-top:0;">Hubungi Bantuan</h3>
+    <p>Klik salah satu nomor di bawah ini untuk menghubungi via WhatsApp 👇</p>
+
+    <div style="text-align:left;margin-top:15px;">
+      <p>🏍️ <strong>Kendala Unit</strong><br>
+        <a href="https://wa.me/6287722285445?text=Halo%2C%20saya%20butuh%20bantuan%20towing"
+           target="_blank" style="color:#64ffda;text-decoration:none;">
+           +62-877-2228-5445
+        </a>
+      </p>
+
+      <p>📞 <strong>Info Tagihan</strong><br>
+        <a href="https://wa.me/6285117468556?text=Halo%2C%20saya%20butuh%20informasi%20tentang%20tagihan"
+           target="_blank" style="color:#64ffda;text-decoration:none;">
+           +62 851-1746-8556
+        </a>
+      </p>
+    </div>
+
+    <button id="closeHelp" style="
+      margin-top:20px;
+      background:transparent;
+      border:1px solid #64ffda;
+      color:#64ffda;
+      padding:8px 15px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+      width:100%;
+    ">Tutup</button>
+  `;
+  document.body.appendChild(helpPanel);
+
+  // === Event buka/tutup panel ===
+  helpBtn.onclick = () => {
+    helpPanel.style.right = helpPanel.style.right === "0px" ? "-300px" : "0px";
+  };
+  helpPanel.querySelector("#closeHelp").onclick = () => {
+    helpPanel.style.right = "-300px";
+  };
+  </script>
+  
 </body>
 </html>
