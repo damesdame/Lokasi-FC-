@@ -5,453 +5,206 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lokasi FC MAKA</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    #searchInput {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px 15px;
+      margin: 15px auto 25px auto;
+      border: 1px solid #64ffda;
+      border-radius: 10px;
+      background: rgba(10,25,47,0.85);
+      color: #64ffda;
+      font-size: 1em;
+      text-align: center;
+      display: block;
+      box-shadow: 0 0 10px rgba(100,255,218,0.3);
+    }
+    .card h2 {
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .card-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .card.active .card-content {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
 
   <header>
     <div class="logo-container">
       <img src="mlu-logo.png" alt="MLU Logo">
-      </div>
+    </div>
     <h1>Lokasi FC MAKA</h1>
   </header>
 
+  <input type="text" id="searchInput" placeholder="🔍 Cari lokasi charger...">
+
   <main class="grid-container">
 
-    <div class="card">
-      <h2>⚡ MAKA Showroom Kelapa Gading</h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 3</p>
-      <p>⏰ Operasional: 24 jam 7/7</p>
-      <p>💰 Biaya: Gratis</p>
-      <a href="https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ MAKA Showroom Kelapa Gading</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
+        <a href="https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>⚡ MAKA Showroom Radio Dalam</h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 3</p>
-      <p>⏰ Operasional: 24 jam 7/7</p>
-      <p>💰 Biaya: Gratis</p>
-      <a href="https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ MAKA Showroom Radio Dalam</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
+        <a href="https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>⚡ MAKA Showroom Bekasi</h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 3</p>
-      <p>⏰ Operasional: 24 jam 7/7</p>
-      <p>💰 Biaya: Gratis</p>
-      <a href="https://maps.app.goo.gl/4fdRXFebJHJW63Dg7" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ MAKA Showroom Bekasi</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
+        <a href="https://maps.app.goo.gl/4fdRXFebJHJW63Dg7" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>⚡ MAKA Showroom Gading Serpong</h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 3</p>
-      <p>⏰ Operasional: 24 jam 7/7</p>
-      <p>💰 Biaya: Gratis (Parkir Berbayar)</p>
-      <a href="https://maps.app.goo.gl/j5oeATswU7J9e9jj7" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ MAKA Showroom Gading Serpong</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis (Parkir Berbayar)</p>
+        <a href="https://maps.app.goo.gl/j5oeATswU7J9e9jj7" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>⚡ MAKA Showroom Depok</h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 3</p>
-      <p>⏰ Operasional: 24 jam 7/7</p>
-      <p>💰 Biaya: Gratis</p>
-      <a href="https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ MAKA Showroom Depok</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
+        <a href="https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>🏨 Marbella Kemang Residence</h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 3</p>
-      <p>⏰ Operasional: 24 jam 7/7</p>
-      <p>💰 Biaya: Gratis (Parkir berbayar)</p>
-      <a href="https://maps.app.goo.gl/2dEoMaxPMdvA5e356" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>🏨 Marbella Kemang Residence</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis (Parkir berbayar)</p>
+        <a href="https://maps.app.goo.gl/2dEoMaxPMdvA5e356" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>⚡ Starvo PIK</h2>
-      <p>🔌 Tipe Charger: Medium</p>
-      <p>🔋 Jumlah Nozzle: 2</p>
-      <p>⏰ Operasional: Senin–Jumat 08.00–19.00; Sabtu 08.00–17.00</p>
-      <p>💰 Biaya: Berbayar (via <a href="https://play.google.com/store/apps/details?id=com.moizasia.starvo_mobile" target="_blank">Starvo App</a>)</p>
-      <a href="https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ Starvo PIK</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Medium</p><p>🔋 Jumlah Nozzle: 2</p>
+        <p>⏰ Operasional: Senin–Jumat 08.00–19.00; Sabtu 08.00–17.00</p>
+        <p>💰 Biaya: Berbayar (via <a href="https://play.google.com/store/apps/details?id=com.moizasia.starvo_mobile" target="_blank">Starvo App</a>)</p>
+        <a href="https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>⚡ Starvo Kedoya</h2>
-      <p>🔌 Tipe Charger: Medium</p>
-      <p>🔋 Jumlah Nozzle: 1</p>
-      <p>⏰ Operasional: Senin–Jumat 09.00–17.00; Sabtu 09.00–14.00</p>
-      <p>💰 Biaya: Berbayar (via <a href="https://starvo.co.id/" target="_blank">Starvo App</a>)</p>
-      <a href="https://maps.app.goo.gl/HSKbMPz5UrwW178V9" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ Starvo Kedoya</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Medium</p><p>🔋 Jumlah Nozzle: 1</p><p>⏰ Operasional: Senin–Jumat 09.00–17.00; Sabtu 09.00–14.00</p>
+        <p>💰 Biaya: Berbayar (via <a href="https://starvo.co.id/" target="_blank">Starvo App</a>)</p>
+        <a href="https://maps.app.goo.gl/HSKbMPz5UrwW178V9" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>⚡ Lite Showroom MAKA Motors Ciledug</h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 2</p>
-      <p>⏰ Operasional: 24 jam 7/7</p>
-      <p>💰 Biaya: Gratis</p>
-      <a href="https://maps.app.goo.gl/DSJiJyAW1BvL2Gwm8" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ Lite Showroom MAKA Motors Ciledug</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
+        <a href="https://maps.app.goo.gl/DSJiJyAW1BvL2Gwm8" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>⚡ Lite Showroom MAKA Motors Bintaro</h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 2</p>
-      <p>⏰ Operasional: 24 jam 7/7</p>
-      <p>💰 Biaya: Gratis</p>
-      <a href="https://maps.app.goo.gl/yZNxoj2gyutxd4zJA" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ Lite Showroom MAKA Motors Bintaro</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
+        <a href="https://maps.app.goo.gl/yZNxoj2gyutxd4zJA" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>⚡ Motoriz Meruya</h2>
-      <p>🔌 Tipe Charger: Medium</p>
-      <p>🔋 Jumlah Nozzle: 1</p>
-      <p>⏰ Operasional: 09.00–19.00 WIB</p>
-      <p>💰 Biaya: Rp. 5.000 / jam</p>
-      <a href="https://maps.app.goo.gl/nV69aPbcA1MWjLnN7" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ Motoriz Meruya</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Medium</p><p>🔋 Jumlah Nozzle: 1</p><p>⏰ Operasional: 09.00–19.00 WIB</p><p>💰 Biaya: Rp. 5.000 / jam</p>
+        <a href="https://maps.app.goo.gl/nV69aPbcA1MWjLnN7" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>⚡ Motoriz Kranggan</h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 2</p>
-      <p>⏰ Operasional: 09.00–19.00 WIB</p>
-      <p>💰 Biaya: Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)</p>
-      <a href="https://maps.app.goo.gl/bA1248oJ5C8pUXhg9" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>⚡ Motoriz Kranggan</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 09.00–19.00 WIB</p><p>💰 Biaya: Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)</p>
+        <a href="https://maps.app.goo.gl/bA1248oJ5C8pUXhg9" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>🏡 Warung Bu Ratna Cirendeu</h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 2</p>
-      <p>⏰ Operasional: 06.00–23.59 </p>
-      <p>💰 Biaya: 1k per 10%</p>
-      <a href="https://maps.app.goo.gl/7cK7Vr1qtS7YzpSH7" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>🏡 Warung Bu Ratna Cirendeu</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 06.00–23.59 </p><p>💰 Biaya: 1k per 10%</p>
+        <a href="https://maps.app.goo.gl/7cK7Vr1qtS7YzpSH7" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-<div class="card">
-      <h2>🏡 Klinik Pratama Condet </h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 2</p>
-      <p>⏰ Operasional: 07.00 - Sampe tukang martabak pulang </p>
-      <p>💰 Biaya: Berbayar  (via <a href="https://casan.id/" target="_blank">Casan.id</a>) </p>
-      <a href="https://maps.app.goo.gl/417yrRuVMJNmEtf17" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>🏡 Klinik Pratama Condet</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 07.00 - Sampe tukang martabak pulang </p>
+        <p>💰 Biaya: Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)</p>
+        <a href="https://maps.app.goo.gl/417yrRuVMJNmEtf17" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>🏡  Mister Kong Steam Wash Srengseng Sawah Jagakarsa </h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 2</p>
-      <p>⏰ Operasional: 10.00 - 22.00</p>
-      <p>💰 Biaya: Berbayar  (via <a href="https://casan.id/" target="_blank">Casan.id</a>)</p>
-      <a href="https://share.google/nj9RIQjsBEMEvPcGK" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>🏡 Mister Kong Steam Wash Srengseng Sawah Jagakarsa</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 10.00 - 22.00</p><p>💰 Biaya: Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)</p>
+        <a href="https://share.google/nj9RIQjsBEMEvPcGK" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>🏨 Hotel Kartika Chandra </h2>
-      <p>🔌 Tipe Charger: Fast</p>
-      <p>🔋 Jumlah Nozzle: 5</p>
-      <p>⏰ Operasional: 24 jam</p>
-      <p>💰 Biaya: Berbayar (via <a href="https://play.google.com/store/apps/details?id=com.moizasia.starvo_mobile" target="_blank">Starvo App</a>) </p>
-      <a href="https://maps.app.goo.gl/Ca21HTW4uGDgoqWp8?g_st=ac" target="_blank">📍 Buka Navigasi</a>
+    <div class="card"><h2>🏨 Hotel Kartika Chandra</h2>
+      <div class="card-content">
+        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 5</p><p>⏰ Operasional: 24 jam</p><p>💰 Biaya: Berbayar (via <a href="https://play.google.com/store/apps/details?id=com.moizasia.starvo_mobile" target="_blank">Starvo App</a>)</p>
+        <a href="https://maps.app.goo.gl/Ca21HTW4uGDgoqWp8?g_st=ac" target="_blank">📍 Buka Navigasi</a>
+      </div>
     </div>
+
   </main>
+
   <footer>
-    <p class="footer-title">M L U </p>
+    <p class="footer-title">M L U</p>
     <p class="footer-subtitle">Mau Ape Lu</p>
-   
-    <!-- Penghitung Viewers -->
-    <div id="viewerCount" style="
-      margin-top: 10px;
-      color:#64ffda;
-      font-weight:bold;
-      font-size: 0.95em;
-      text-shadow: 0 0 10px #64ffda;
-    ">
-     <span id="count"></span>
+    <div id="viewerCount" style="margin-top:10px;color:#64ffda;font-weight:bold;font-size:0.95em;text-shadow:0 0 10px #64ffda;">
+      <span id="count"></span>
     </div>
   </footer>
 
-  <!-- Script Penghitung Viewers -->
   <script>
-    fetch('https://api.countapi.xyz/hit/mlu-charger/visits')
-      .then(res => res.json())
-      .then(res => {
-        document.getElementById('count').innerText = res.value.toLocaleString();
+    async function updateViewerCount() {
+      const counter = document.getElementById('count');
+      try {
+        const res = await fetch('https://api.countapi.xyz/hit/mlu-charger/visits');
+        const data = await res.json();
+        counter.innerText = data.value.toLocaleString();
+        localStorage.setItem('mluViews', data.value);
+      } catch (err) {
+        const backup = localStorage.getItem('mluViews') || 1;
+        counter.innerText = backup + ' (offline)';
+      }
+    }
+    updateViewerCount();
+
+    const searchInput = document.getElementById("searchInput");
+    const cards = document.querySelectorAll(".card");
+    searchInput.addEventListener("input", () => {
+      const term = searchInput.value.toLowerCase();
+      cards.forEach(card => {
+        const title = card.querySelector("h2").innerText.toLowerCase();
+        card.style.display = title.includes(term) ? "block" : "none";
       });
+    });
+    cards.forEach(card => {
+      const title = card.querySelector("h2");
+      title.addEventListener("click", () => card.classList.toggle("active"));
+    });
   </script>
-  <script>
-  // ================================
-  // 🔋 Data Lokasi Charger MLU
-  // ================================
-  const chargers = [
-    { name: "MAKA Showroom Kelapa Gading", lat: -6.159635, lng: 106.906682, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9" },
-    { name: "MAKA Showroom Radio Dalam", lat: -6.257621, lng: 106.802051, link: "https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6" },
-    { name: "MAKA Showroom Bekasi", lat: -6.243967, lng: 106.994823, link: "https://maps.app.goo.gl/4fdRXFebJHJW63Dg7" },
-    { name: "MAKA Showroom Gading Serpong", lat: -6.246792, lng: 106.629594, link: "https://maps.app.goo.gl/j5oeATswU7J9e9jj7" },
-    { name: "MAKA Showroom Depok", lat: -6.402484, lng: 106.794240, link: "https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7" },
-    { name: "MAKA Hotel Marbella Kemang Residence", lat: -6.260627, lng: 106.813746, link: "https://maps.app.goo.gl/2dEoMaxPMdvA5e356" },
-    { name: "Starvo PIK", lat: -6.111097, lng: 106.742471, link: "https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7" },
-    { name: "Starvo Kedoya", lat: -6.186334, lng: 106.766978, link: "https://maps.app.goo.gl/HSKbMPz5UrwW178V9" },
-    { name: "Lite Showroom MAKA Motors Ciledug", lat: -6.237947, lng: 106.708237, link: "https://maps.app.goo.gl/DSJiJyAW1BvL2Gwm8" },
-    { name: "Lite Showroom MAKA Motors Bintaro", lat: -6.276471, lng: 106.730544, link: "https://maps.app.goo.gl/yZNxoj2gyutxd4zJA" },
-    { name: "Motoriz Meruya", lat: -6.200132, lng: 106.737796, link: "https://maps.app.goo.gl/nV69aPbcA1MWjLnN7" },
-    { name: "Motoriz Kranggan", lat: -6.340640, lng: 106.943016, link: "https://maps.app.goo.gl/bA1248oJ5C8pUXhg9" },
-    { name: "Warung Bu Ratna Cirendeu", lat: -6.310043, lng: 106.758325, link: "https://maps.app.goo.gl/7cK7Vr1qtS7YzpSH7" },
-    { name: "Klinik Pratama Condet", lat: -6.295322, lng: 106.863682, link: "https://maps.app.goo.gl/417yrRuVMJNmEtf17" }
-  ];
 
-  // ================================
-  // 📍 Fungsi Menghitung Jarak
-  // ================================
-  function getDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos(lat1 * Math.PI / 180) *
-      Math.cos(lat2 * Math.PI / 180) *
-      Math.sin(dLon / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
-  }
-
-  // ================================
-  // ✨ Popup Neon
-  // ================================
-  const popup = document.createElement("div");
-  popup.style.position = "fixed";
-  popup.style.top = "50%";
-  popup.style.left = "50%";
-  popup.style.transform = "translate(-50%, -50%)";
-  popup.style.background = "rgba(10,25,47,0.95)";
-  popup.style.color = "#64ffda";
-  popup.style.padding = "25px 30px";
-  popup.style.border = "1px solid #64ffda";
-  popup.style.borderRadius = "15px";
-  popup.style.boxShadow = "0 0 20px rgba(100,255,218,0.7)";
-  popup.style.fontFamily = "Poppins, sans-serif";
-  popup.style.textAlign = "center";
-  popup.style.display = "none";
-  popup.style.zIndex = "9999";
-  popup.style.transition = "opacity 0.3s ease";
-  popup.style.opacity = "0";
-
-  const popupTitle = document.createElement("h3");
-  popupTitle.style.marginTop = "0";
-  popupTitle.style.marginBottom = "10px";
-  popupTitle.style.textShadow = "0 0 10px #64ffda";
-
-  const popupText = document.createElement("p");
-  popupText.style.margin = "0 0 15px 0";
-
-  const popupBtn = document.createElement("button");
-  popupBtn.innerText = "📍 Buka di Google Maps";
-  popupBtn.style.padding = "10px 20px";
-  popupBtn.style.border = "none";
-  popupBtn.style.borderRadius = "10px";
-  popupBtn.style.background = "#64ffda";
-  popupBtn.style.color = "#0a192f";
-  popupBtn.style.cursor = "pointer";
-  popupBtn.style.fontWeight = "600";
-  popupBtn.onclick = () => window.open(popupBtn.dataset.link, "_blank");
-
-  popup.appendChild(popupTitle);
-  popup.appendChild(popupText);
-  popup.appendChild(popupBtn);
-  document.body.appendChild(popup);
-
-  // ================================
-  // 🟢 Tombol Neon Cari Charger
-  // ================================
-  const btn = document.createElement("button");
-  btn.innerText = "📍 Temukan Charger Terdekat";
-  Object.assign(btn.style, {
-    padding: "14px 28px",
-    margin: "20px auto",
-    display: "block",
-    background: "transparent",
-    border: "2px solid #64ffda",
-    color: "#64ffda",
-    fontWeight: "600",
-    fontSize: "1em",
-    borderRadius: "12px",
-    cursor: "pointer",
-    textShadow: "0 0 8px #64ffda",
-    boxShadow: "0 0 15px rgba(100,255,218,0.5)",
-    transition: "0.3s"
-  });
-  btn.onmouseenter = () => {
-    btn.style.background = "#64ffda";
-    btn.style.color = "#0a192f";
-    btn.style.boxShadow = "0 0 25px rgba(100,255,218,0.9)";
-  };
-  btn.onmouseleave = () => {
-    btn.style.background = "transparent";
-    btn.style.color = "#64ffda";
-    btn.style.boxShadow = "0 0 15px rgba(100,255,218,0.5)";
-  };
-  document.querySelector("header").appendChild(btn);
-
-  // ================================
-  // 📡 Fungsi Cari Charger Terdekat
-  // ================================
-  function findNearest() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const { latitude, longitude } = pos.coords;
-        let nearest = chargers[0];
-        let minDist = getDistance(latitude, longitude, chargers[0].lat, chargers[0].lng);
-        chargers.forEach(charger => {
-          const dist = getDistance(latitude, longitude, charger.lat, charger.lng);
-          if (dist < minDist) {
-            minDist = dist;
-            nearest = charger;
-          }
-        });
-
-        popupTitle.innerText = "🔋 Charger Terdekat Ditemukan!";
-        popupText.innerText = `${nearest.name}\n📏 Jarak: ${minDist.toFixed(2)} km`;
-        popupBtn.dataset.link = nearest.link;
-
-        popup.style.display = "block";
-        setTimeout(() => popup.style.opacity = "1", 50);
-
-        setTimeout(() => {
-          popup.style.opacity = "0";
-          setTimeout(() => popup.style.display = "none", 400);
-        }, 8000); // popup hilang setelah 8 detik
-
-      }, () => alert("⚠️ Gagal mendeteksi lokasi. Pastikan izin lokasi aktif."));
-    } else {
-      alert("⚠️ Browser tidak mendukung deteksi lokasi.");
-    }
-  }
-
-  btn.onclick = findNearest;
-    </script>
-  <script>
-  // === Tambahkan tombol ke header ===
-  const header = document.querySelector("header");
-  const helpBtn = document.createElement("button");
-  helpBtn.id = "helpBtn";
-  helpBtn.innerHTML = "🆘 Bantuan";
-
-  Object.assign(helpBtn.style, {
-    position: "absolute",
-    top: "25px",
-    right: "30px",
-    background: "#64ffda",
-    color: "#0a192f",
-    border: "none",
-    borderRadius: "25px",
-    padding: "10px 18px",
-    fontWeight: "bold",
-    fontFamily: "'Poppins', sans-serif",
-    cursor: "pointer",
-    boxShadow: "0 0 15px rgba(100,255,218,0.6)",
-    transition: "all 0.3s ease",
-    zIndex: "1000"
-  });
-
-  helpBtn.onmouseenter = () => (helpBtn.style.boxShadow = "0 0 25px rgba(100,255,218,1)");
-  helpBtn.onmouseleave = () => (helpBtn.style.boxShadow = "0 0 15px rgba(100,255,218,0.6)");
-
-  header.style.position = "relative";
-  header.appendChild(helpBtn);
-
-  // === Responsif otomatis untuk HP ===
-  const adjustButtonPosition = () => {
-    if (window.innerWidth < 600) {
-      helpBtn.style.position = "static";
-      helpBtn.style.display = "block";
-      helpBtn.style.margin = "15px auto 0 auto";
-    } else {
-      helpBtn.style.position = "absolute";
-      helpBtn.style.top = "25px";
-      helpBtn.style.right = "30px";
-      helpBtn.style.margin = "0";
-    }
-  };
-  window.addEventListener("resize", adjustButtonPosition);
-  adjustButtonPosition();
-
-  // === Panel Bantuan ===
-  const helpPanel = document.createElement("div");
-  Object.assign(helpPanel.style, {
-    position: "fixed",
-    top: "0",
-    right: "-300px",
-    width: "260px",
-    height: "100%",
-    background: "rgba(10,25,47,0.97)",
-    boxShadow: "-2px 0 15px rgba(100,255,218,0.4)",
-    borderLeft: "1px solid #64ffda",
-    color: "#e6f1ff",
-    padding: "20px",
-    transition: "right 0.4s ease",
-    zIndex: "9999",
-    overflowY: "auto",
-    fontFamily: "'Poppins', sans-serif"
-  });
-
-  helpPanel.innerHTML = `
-    <h3 style="color:#64ffda;text-shadow:0 0 10px #64ffda;margin-top:0;">Menu bantuan </h3>
-    <p>Motor mati, butuh towing atau tanya soal tagihan xendit? </p>
-    <p>klik salah satu nomor di bawah ini untuk menghubungi via WhatsApp 👇</p>
-
-    <div style="text-align:left;margin-top:15px;">
-      <p>🏍️ <strong>Kendala Unit</strong><br>
-        <a href="https://wa.me/6287722285445?text=Halo%2C%20saya%20butuh%20bantuan%20towing"
-           target="_blank" style="color:#64ffda;text-decoration:none;">
-           +62-877-2228-5445
-        </a>
-      </p>
-
-      <p>📞 <strong>Info Tagihan</strong><br>
-        <a href="https://wa.me/6285117468556?text=Halo%2C%20saya%20butuh%20informasi%20tentang%20tagihan"
-           target="_blank" style="color:#64ffda;text-decoration:none;">
-           +62 851-1746-8556
-        </a>
-      </p>
-      
-      <p>📞 <strong>RTO Akbar</strong><br>
-      <a href="https://wa.me/6285281760728?text=Halo%2C%20saya%20butuh%20informasi%20tentang%20Maka" target="_blank" style="color:#64ffda; text-decoration:none;">+62 852-8176-0728</a>
-    </p>
-
-    <p>📞 <strong>Ketum MLU Ilham</strong><br>
-      <a href="https://wa.me/6282310253644?text=Bang%2C%20saya%20butuh%20bantuan" target="_blank" style="color:#64ffda; text-decoration:none;">+62 823-1025-3644</a>
-    </p>
-    </div>
-
-    <button id="closeHelp" style="
-      margin-top:20px;
-      background:transparent;
-      border:1px solid #64ffda;
-      color:#64ffda;
-      padding:8px 15px;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:bold;
-      width:100%;
-    ">Tutup</button>
-  `;
-  document.body.appendChild(helpPanel);
-
-  // === Event buka/tutup panel ===
-  helpBtn.onclick = () => {
-    helpPanel.style.right = helpPanel.style.right === "0px" ? "-300px" : "0px";
-  };
-  helpPanel.querySelector("#closeHelp").onclick = () => {
-    helpPanel.style.right = "-300px";
-  };
-  </script>
-  
 </body>
 </html>
