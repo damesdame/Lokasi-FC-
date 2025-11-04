@@ -1,210 +1,569 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Lokasi FC MAKA</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
-    #searchInput {
-      width: 80%;
-      max-width: 400px;
-      padding: 10px 15px;
-      margin: 15px auto 25px auto;
-      border: 1px solid #64ffda;
-      border-radius: 10px;
-      background: rgba(10,25,47,0.85);
-      color: #64ffda;
-      font-size: 1em;
-      text-align: center;
-      display: block;
-      box-shadow: 0 0 10px rgba(100,255,218,0.3);
+    /* ---------- Basic layout (keep grid design similar to master) ---------- */
+    :root{
+      --bg1:#0a192f;
+      --bg2:#172a45;
+      --neon:#64ffda;
+      --text:#e6f1ff;
+      --card-bg: rgba(10,25,47,0.85);
     }
-    .card h2 {
-      cursor: pointer;
-      margin-bottom: 10px;
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      text-align:center;
     }
-    .card-content {
-      display: none;
-      animation: fadeIn 0.3s ease;
+    header{
+      padding:18px 16px 8px 16px;
+      position:relative;
     }
-    .card.active .card-content {
-      display: block;
+    .logo-container{
+      display:inline-block;
+      vertical-align:middle;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
+    .logo-container img{
+      width:110px;
+      height:auto;
+      /* remove circle border per request: no border */
+      border-radius:0;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
     }
+    header h1{
+      margin:8px 0 12px 0;
+      color:var(--neon);
+      font-size:1.6rem;
+      text-shadow: 0 0 8px rgba(100,255,218,0.18);
+      font-weight:700;
+    }
+
+    /* manual find button under header */
+    .find-btn{
+      padding:10px 18px;
+      margin:8px auto 12px auto;
+      display:inline-block;
+      background:transparent;
+      border:2px solid var(--neon);
+      color:var(--neon);
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:600;
+      box-shadow: 0 0 12px rgba(100,255,218,0.25);
+      transition:all .2s ease;
+    }
+    .find-btn:hover{
+      background:var(--neon);
+      color:var(--bg1);
+      box-shadow: 0 0 26px rgba(100,255,218,0.7);
+    }
+
+    /* grid */
+    main.grid-container{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+      gap:14px;
+      padding:18px;
+      max-width:1200px;
+      margin:0 auto 110px auto; /* give space for fixed footer */
+    }
+
+    .card{
+      background: var(--card-bg);
+      border: 1px solid rgba(100,255,218,0.12);
+      border-radius:12px;
+      padding:12px;
+      box-shadow: 0 0 12px rgba(100,255,218,0.08);
+      transition: transform .15s ease, box-shadow .15s ease;
+      text-align:left;
+      min-height:120px;
+    }
+    .card:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 0 26px rgba(100,255,218,0.12);
+    }
+    /* -------- smaller fonts to show more items without scroll ----- */
+    .card h2{
+      color:var(--neon);
+      font-size:1.0rem; /* smaller */
+      margin:0 0 6px 0;
+      line-height:1.1;
+      font-weight:700;
+    }
+    .card p{
+      margin:4px 0;
+      font-size:0.82rem; /* smaller */
+      color:var(--text);
+      line-height:1.1;
+    }
+    .card a{
+      display:inline-block;
+      margin-top:8px;
+      padding:6px 10px;
+      background:var(--neon);
+      color:var(--bg1);
+      font-weight:700;
+      text-decoration:none;
+      border-radius:8px;
+      font-size:0.82rem;
+    }
+
+    /* footer fixed */
+    footer{
+      position:fixed;
+      bottom:0;
+      left:0;
+      width:100%;
+      background: rgba(10,25,47,0.98);
+      padding:10px 12px;
+      box-shadow: 0 -4px 18px rgba(0,0,0,0.6);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:20px;
+      z-index:900;
+    }
+    .footer-title{
+      font-size:1.1rem;
+      color:var(--neon);
+      font-weight:700;
+      margin:0;
+      letter-spacing: 6px;
+    }
+    .footer-subtitle{
+      font-size:0.75rem;
+      color:#ccd6f6;
+      margin:0;
+      opacity:0.9;
+    }
+    #viewerCount{
+      color:var(--neon);
+      font-weight:700;
+      font-size:0.95rem;
+      text-shadow: 0 0 6px rgba(100,255,218,0.16);
+    }
+
+    /* help button near logo (SOS) */
+    #helpBtn {
+      position:absolute;
+      top:14px;
+      right:18px;
+      background:var(--neon);
+      color:var(--bg1);
+      border:none;
+      border-radius:22px;
+      padding:8px 12px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow: 0 0 16px rgba(100,255,218,0.5);
+      z-index:800;
+    }
+    @media (max-width:600px){
+      #helpBtn{
+        position:static;
+        display:block;
+        margin:8px auto 0 auto;
+      }
+      header h1{font-size:1.2rem;}
+      .logo-container img{width:88px;}
+      main.grid-container{padding:12px; gap:10px;}
+    }
+
+    /* help panel */
+    #helpPanel{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100%;
+      background: rgba(10,25,47,0.97);
+      box-shadow: -2px 0 18px rgba(100,255,218,0.28);
+      border-left:1px solid rgba(100,255,218,0.12);
+      color:var(--text);
+      padding:18px;
+      transition:right .36s ease;
+      z-index:980;
+      overflow:auto;
+      font-size:0.9rem;
+    }
+
+    /* compact result popup */
+    .result-popup{
+      position:fixed;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      background: rgba(10,25,47,0.98);
+      color:var(--neon);
+      border:1px solid rgba(100,255,218,0.18);
+      padding:12px 14px;
+      border-radius:10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      z-index:9999;
+      min-width:240px;
+      display:none;
+      text-align:center;
+      font-family:inherit;
+    }
+    .result-popup h4{
+      margin:8px 0 6px 0;
+      color:var(--neon);
+      font-size:1rem;
+    }
+    .result-popup button{
+      margin-top:8px;
+      padding:8px 12px;
+      border-radius:8px;
+      border:none;
+      background:var(--neon);
+      color:var(--bg1);
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    /* initial welcome modal (shows once) */
+    #welcomeOverlay{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,0.55);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:10000;
+    }
+    #welcomeBox{
+      background: rgba(10,25,47,0.98);
+      color:var(--text);
+      border-radius:12px;
+      padding:18px;
+      border:1px solid rgba(100,255,218,0.14);
+      min-width:280px;
+      text-align:center;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+    #welcomeBox h3{
+      margin:6px 0 10px 0;
+      color:var(--neon);
+      font-size:1.1rem;
+    }
+    #welcomeBox p{margin:0 0 10px 0; font-size:0.95rem;}
+    .welcome-actions{display:flex; gap:8px; justify-content:center; margin-top:10px; flex-wrap:wrap;}
+    .welcome-actions button{
+      padding:8px 12px;
+      border-radius:8px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .btn-welcome-primary{ background:var(--neon); color:var(--bg1); }
+    .btn-welcome-alt{ background:transparent; color:var(--neon); border:1px solid rgba(100,255,218,0.18); }
   </style>
 </head>
 <body>
 
   <header>
     <div class="logo-container">
-      <img src="mlu-logo.png" alt="MLU Logo">
+      <!-- Logo file as in your repo (keep same file name) -->
+      <img src="mlu-logo.png" alt="MLU Logo" id="mluLogo">
     </div>
+
     <h1>Lokasi FC MAKA</h1>
+
+    <!-- manual find button (keberadaan tetap sesuai rencana) -->
+    <button class="find-btn" id="manualFindBtn">📍 Temukan Charger Terdekat</button>
+
+    <!-- SOS button near logo (keberadaan tetap / responsive) -->
+    <button id="helpBtn" aria-label="Bantuan">🆘 Bantuan</button>
   </header>
 
-  <input type="text" id="searchInput" placeholder="🔍 Cari lokasi charger...">
-
   <main class="grid-container">
-
-    <div class="card"><h2>⚡ MAKA Showroom Kelapa Gading</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
-        <a href="https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <!-- ==== cards (DITAHAN PERSIS DARI SCRIPT MASTER, hanya font lebih kecil) ==== -->
+    <div class="card">
+      <h2>⚡ MAKA Showroom Kelapa Gading</h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 3</p>
+      <p>⏰ Operasional: 24 jam 7/7</p>
+      <p>💰 Biaya: Gratis</p>
+      <a href="https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>⚡ MAKA Showroom Radio Dalam</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
-        <a href="https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>⚡ MAKA Showroom Radio Dalam</h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 3</p>
+      <p>⏰ Operasional: 24 jam 7/7</p>
+      <p>💰 Biaya: Gratis</p>
+      <a href="https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>⚡ MAKA Showroom Bekasi</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
-        <a href="https://maps.app.goo.gl/4fdRXFebJHJW63Dg7" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>⚡ MAKA Showroom Bekasi</h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 3</p>
+      <p>⏰ Operasional: 24 jam 7/7</p>
+      <p>💰 Biaya: Gratis</p>
+      <a href="https://maps.app.goo.gl/4fdRXFebJHJW63Dg7" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>⚡ MAKA Showroom Gading Serpong</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis (Parkir Berbayar)</p>
-        <a href="https://maps.app.goo.gl/j5oeATswU7J9e9jj7" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>⚡ MAKA Showroom Gading Serpong</h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 3</p>
+      <p>⏰ Operasional: 24 jam 7/7</p>
+      <p>💰 Biaya: Gratis (Parkir Berbayar)</p>
+      <a href="https://maps.app.goo.gl/j5oeATswU7J9e9jj7" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>⚡ MAKA Showroom Depok</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
-        <a href="https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>⚡ MAKA Showroom Depok</h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 3</p>
+      <p>⏰ Operasional: 24 jam 7/7</p>
+      <p>💰 Biaya: Gratis</p>
+      <a href="https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>🏨 Marbella Kemang Residence</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 3</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis (Parkir berbayar)</p>
-        <a href="https://maps.app.goo.gl/2dEoMaxPMdvA5e356" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>🏨 Marbella Kemang Residence</h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 3</p>
+      <p>⏰ Operasional: 24 jam 7/7</p>
+      <p>💰 Biaya: Gratis (Parkir berbayar)</p>
+      <a href="https://maps.app.goo.gl/2dEoMaxPMdvA5e356" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>⚡ Starvo PIK</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Medium</p><p>🔋 Jumlah Nozzle: 2</p>
-        <p>⏰ Operasional: Senin–Jumat 08.00–19.00; Sabtu 08.00–17.00</p>
-        <p>💰 Biaya: Berbayar (via <a href="https://play.google.com/store/apps/details?id=com.moizasia.starvo_mobile" target="_blank">Starvo App</a>)</p>
-        <a href="https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>⚡ Starvo PIK</h2>
+      <p>🔌 Tipe Charger: Medium</p>
+      <p>🔋 Jumlah Nozzle: 2</p>
+      <p>⏰ Operasional: Senin–Jumat 08.00–19.00; Sabtu 08.00–17.00</p>
+      <p>💰 Biaya: Berbayar (via <a href="https://play.google.com/store/apps/details?id=com.moizasia.starvo_mobile" target="_blank">Starvo App</a>)</p>
+      <a href="https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>⚡ Starvo Kedoya</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Medium</p><p>🔋 Jumlah Nozzle: 1</p><p>⏰ Operasional: Senin–Jumat 09.00–17.00; Sabtu 09.00–14.00</p>
-        <p>💰 Biaya: Berbayar (via <a href="https://starvo.co.id/" target="_blank">Starvo App</a>)</p>
-        <a href="https://maps.app.goo.gl/HSKbMPz5UrwW178V9" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>⚡ Starvo Kedoya</h2>
+      <p>🔌 Tipe Charger: Medium</p>
+      <p>🔋 Jumlah Nozzle: 1</p>
+      <p>⏰ Operasional: Senin–Jumat 09.00–17.00; Sabtu 09.00–14.00</p>
+      <p>💰 Biaya: Berbayar (via <a href="https://starvo.co.id/" target="_blank">Starvo App</a>)</p>
+      <a href="https://maps.app.goo.gl/HSKbMPz5UrwW178V9" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>⚡ Lite Showroom MAKA Motors Ciledug</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
-        <a href="https://maps.app.goo.gl/DSJiJyAW1BvL2Gwm8" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>⚡ Lite Showroom MAKA Motors Ciledug</h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 2</p>
+      <p>⏰ Operasional: 24 jam 7/7</p>
+      <p>💰 Biaya: Gratis</p>
+      <a href="https://maps.app.goo.gl/DSJiJyAW1BvL2Gwm8" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>⚡ Lite Showroom MAKA Motors Bintaro</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 24 jam 7/7</p><p>💰 Biaya: Gratis</p>
-        <a href="https://maps.app.goo.gl/yZNxoj2gyutxd4zJA" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>⚡ Lite Showroom MAKA Motors Bintaro</h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 2</p>
+      <p>⏰ Operasional: 24 jam 7/7</p>
+      <p>💰 Biaya: Gratis</p>
+      <a href="https://maps.app.goo.gl/yZNxoj2gyutxd4zJA" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>⚡ Motoriz Meruya</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Medium</p><p>🔋 Jumlah Nozzle: 1</p><p>⏰ Operasional: 09.00–19.00 WIB</p><p>💰 Biaya: Rp. 5.000 / jam</p>
-        <a href="https://maps.app.goo.gl/nV69aPbcA1MWjLnN7" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>⚡ Motoriz Meruya</h2>
+      <p>🔌 Tipe Charger: Medium</p>
+      <p>🔋 Jumlah Nozzle: 1</p>
+      <p>⏰ Operasional: 09.00–19.00 WIB</p>
+      <p>💰 Biaya: Rp. 5.000 / jam</p>
+      <a href="https://maps.app.goo.gl/nV69aPbcA1MWjLnN7" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>⚡ Motoriz Kranggan</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 09.00–19.00 WIB</p><p>💰 Biaya: Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)</p>
-        <a href="https://maps.app.goo.gl/bA1248oJ5C8pUXhg9" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>⚡ Motoriz Kranggan</h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 2</p>
+      <p>⏰ Operasional: 09.00–19.00 WIB</p>
+      <p>💰 Biaya: Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)</p>
+      <a href="https://maps.app.goo.gl/bA1248oJ5C8pUXhg9" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>🏡 Warung Bu Ratna Cirendeu</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 06.00–23.59 </p><p>💰 Biaya: 1k per 10%</p>
-        <a href="https://maps.app.goo.gl/7cK7Vr1qtS7YzpSH7" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>🏡 Warung Bu Ratna Cirendeu</h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 2</p>
+      <p>⏰ Operasional: 06.00–23.59 </p>
+      <p>💰 Biaya: 1k per 10%</p>
+      <a href="https://maps.app.goo.gl/7cK7Vr1qtS7YzpSH7" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>🏡 Klinik Pratama Condet</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 07.00 - Sampe tukang martabak pulang </p>
-        <p>💰 Biaya: Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)</p>
-        <a href="https://maps.app.goo.gl/417yrRuVMJNmEtf17" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>🏡 Klinik Pratama Condet </h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 2</p>
+      <p>⏰ Operasional: 07.00 - Sampe tukang martabak pulang </p>
+      <p>💰 Biaya: Berbayar  (via <a href="https://casan.id/" target="_blank">Casan.id</a>) </p>
+      <a href="https://maps.app.goo.gl/417yrRuVMJNmEtf17" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>🏡 Mister Kong Steam Wash Srengseng Sawah Jagakarsa</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 2</p><p>⏰ Operasional: 10.00 - 22.00</p><p>💰 Biaya: Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)</p>
-        <a href="https://share.google/nj9RIQjsBEMEvPcGK" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>🏡  Mister Kong Steam Wash Srengseng Sawah Jagakarsa </h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 2</p>
+      <p>⏰ Operasional: 10.00 - 22.00</p>
+      <p>💰 Biaya: Berbayar  (via <a href="https://casan.id/" target="_blank">Casan.id</a>)</p>
+      <a href="https://share.google/nj9RIQjsBEMEvPcGK" target="_blank">📍 Buka Navigasi</a>
     </div>
 
-    <div class="card"><h2>🏨 Hotel Kartika Chandra</h2>
-      <div class="card-content">
-        <p>🔌 Tipe Charger: Fast</p><p>🔋 Jumlah Nozzle: 5</p><p>⏰ Operasional: 24 jam</p><p>💰 Biaya: Berbayar (via <a href="https://play.google.com/store/apps/details?id=com.moizasia.starvo_mobile" target="_blank">Starvo App</a>)</p>
-        <a href="https://maps.app.goo.gl/Ca21HTW4uGDgoqWp8?g_st=ac" target="_blank">📍 Buka Navigasi</a>
-      </div>
+    <div class="card">
+      <h2>🏨 Hotel Kartika Chandra </h2>
+      <p>🔌 Tipe Charger: Fast</p>
+      <p>🔋 Jumlah Nozzle: 5</p>
+      <p>⏰ Operasional: 24 jam</p>
+      <p>💰 Biaya: Berbayar (via <a href="https://play.google.com/store/apps/details?id=com.moizasia.starvo_mobile" target="_blank">Starvo App</a>) </p>
+      <a href="https://maps.app.goo.gl/Ca21HTW4uGDgoqWp8?g_st=ac" target="_blank">📍 Buka Navigasi</a>
     </div>
-
   </main>
 
   <footer>
-    <p class="footer-title">M L U</p>
-    <p class="footer-subtitle">Mau Ape Lu</p>
-    <div id="viewerCount" style="margin-top:10px;color:#64ffda;font-weight:bold;font-size:0.95em;text-shadow:0 0 10px #64ffda;">
-      <span id="count"></span>
+    <div>
+      <p class="footer-title">M L U</p>
+      <p class="footer-subtitle">Mau Ape Lu</p>
     </div>
+    <div id="viewerCount"><span id="count">—</span> viewers</div>
   </footer>
 
+  <!-- help panel (hidden off-canvas) -->
+  <div id="helpPanel" aria-hidden="true">
+    <h3 style="color:var(--neon); margin-top:0; text-shadow:0 0 8px rgba(100,255,218,0.12);">Menu bantuan </h3>
+    <p>Motor mati, butuh towing atau tanya soal tagihan xendit?</p>
+    <p>Klik salah satu nomor di bawah ini untuk menghubungi via WhatsApp 👇</p>
+
+    <div style="text-align:left; margin-top:12px; font-size:0.92rem;">
+      <p>🏍️ <strong>Kendala Unit</strong><br>
+        <a href="https://wa.me/6287722285445?text=Halo%2C%20saya%20butuh%20bantuan%20towing" target="_blank" style="color:var(--neon); text-decoration:none;">+62-877-2228-5445</a>
+      </p>
+
+      <p>📞 <strong>Info Tagihan</strong><br>
+        <a href="https://wa.me/6285117468556?text=Halo%2C%20saya%20butuh%20informasi%20tentang%20tagihan" target="_blank" style="color:var(--neon); text-decoration:none;">+62 851-1746-8556</a>
+      </p>
+
+      <p>📞 <strong>RTO Akbar</strong><br>
+        <a href="https://wa.me/6285281760728?text=Halo%2C%20saya%20butuh%20informasi%20tentang%20Maka" target="_blank" style="color:var(--neon); text-decoration:none;">+62 852-8176-0728</a>
+      </p>
+
+      <p>📞 <strong>Ketum MLU Ilham</strong><br>
+        <a href="https://wa.me/6282310253644?text=Bang%2C%20saya%20butuh%20bantuan" target="_blank" style="color:var(--neon); text-decoration:none;">+62 823-1025-3644</a>
+      </p>
+    </div>
+
+    <button id="closeHelp" style="margin-top:18px; width:100%; padding:8px; border-radius:8px; border:1px solid rgba(100,255,218,0.12); background:transparent; color:var(--neon); font-weight:700; cursor:pointer;">Tutup</button>
+  </div>
+
+  <!-- compact result popup -->
+  <div class="result-popup" id="resultPopup" role="dialog" aria-hidden="true">
+    <h4 id="resultName"></h4>
+    <button id="resultOpenBtn">📍 Buka di Google Maps</button>
+  </div>
+
+  <!-- welcome overlay (shown once) -->
+  <div id="welcomeOverlay" style="display:none;">
+    <div id="welcomeBox" role="dialog" aria-modal="true" aria-label="Selamat datang">
+      <h3>Mau Ape Lu ?</h3>
+      <p>Pilih satu:</p>
+      <div class="welcome-actions">
+        <button class="btn-welcome-primary" id="welcomeFind">📍 cari lokasi fc terdekat</button>
+        <button class="btn-welcome-alt" id="welcomeSOS">🆘 Perlu Bantuan / SOS</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    async function updateViewerCount() {
-      const counter = document.getElementById('count');
-      try {
-        const res = await fetch('https://api.countapi.xyz/hit/mlu-charger/visits');
-        const data = await res.json();
-        counter.innerText = data.value.toLocaleString();
-        localStorage.setItem('mluViews', data.value);
-      } catch (err) {
-        const backup = localStorage.getItem('mluViews') || 1;
-        counter.innerText = backup + ' (offline)';
-      }
+    // =======================
+    // Data lokasi (tidak diubah)
+    // =======================
+    const chargers = [
+      { name: "MAKA Showroom Kelapa Gading", lat: -6.159635, lng: 106.906682, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9" },
+      { name: "MAKA Showroom Radio Dalam", lat: -6.257621, lng: 106.802051, link: "https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6" },
+      { name: "MAKA Showroom Bekasi", lat: -6.243967, lng: 106.994823, link: "https://maps.app.goo.gl/4fdRXFebJHJW63Dg7" },
+      { name: "MAKA Showroom Gading Serpong", lat: -6.246792, lng: 106.629594, link: "https://maps.app.goo.gl/j5oeATswU7J9e9jj7" },
+      { name: "MAKA Showroom Depok", lat: -6.402484, lng: 106.794240, link: "https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7" },
+      { name: "MAKA Hotel Marbella Kemang Residence", lat: -6.260627, lng: 106.813746, link: "https://maps.app.goo.gl/2dEoMaxPMdvA5e356" },
+      { name: "Starvo PIK", lat: -6.111097, lng: 106.742471, link: "https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7" },
+      { name: "Starvo Kedoya", lat: -6.186334, lng: 106.766978, link: "https://maps.app.goo.gl/HSKbMPz5UrwW178V9" },
+      { name: "Lite Showroom MAKA Motors Ciledug", lat: -6.237947, lng: 106.708237, link: "https://maps.app.goo.gl/DSJiJyAW1BvL2Gwm8" },
+      { name: "Lite Showroom MAKA Motors Bintaro", lat: -6.276471, lng: 106.730544, link: "https://maps.app.goo.gl/yZNxoj2gyutxd4zJA" },
+      { name: "Motoriz Meruya", lat: -6.200132, lng: 106.737796, link: "https://maps.app.goo.gl/nV69aPbcA1MWjLnN7" },
+      { name: "Motoriz Kranggan", lat: -6.340640, lng: 106.943016, link: "https://maps.app.goo.gl/bA1248oJ5C8pUXhg9" },
+      { name: "Warung Bu Ratna Cirendeu", lat: -6.310043, lng: 106.758325, link: "https://maps.app.goo.gl/7cK7Vr1qtS7YzpSH7" },
+      { name: "Klinik Pratama Condet", lat: -6.295322, lng: 106.863682, link: "https://maps.app.goo.gl/417yrRuVMJNmEtf17" },
+      { name: "Mister Kong Steam Wash Srengseng Sawah Jagakarsa", lat: -6.299000, lng: 106.800000, link: "https://share.google/nj9RIQjsBEMEvPcGK" },
+      { name: "Hotel Kartika Chandra", lat: -6.260000, lng: 106.840000, link: "https://maps.app.goo.gl/Ca21HTW4uGDgoqWp8?g_st=ac" }
+    ];
+
+    // ---------------------------
+    // Utility: hitung jarak (km)
+    // ---------------------------
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // km
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
     }
-    updateViewerCount();
 
-    const searchInput = document.getElementById("searchInput");
-    const cards = document.querySelectorAll(".card");
-    searchInput.addEventListener("input", () => {
-      const term = searchInput.value.toLowerCase();
-      cards.forEach(card => {
-        const title = card.querySelector("h2").innerText.toLowerCase();
-        card.style.display = title.includes(term) ? "block" : "none";
-      });
-    });
-    cards.forEach(card => {
-      const title = card.querySelector("h2");
-      title.addEventListener("click", () => card.classList.toggle("active"));
-    });
-  </script>
+    // ---------------------------
+    // Compact result popup elements
+    // ---------------------------
+    const resultPopup = document.getElementById('resultPopup');
+    const resultName = document.getElementById('resultName');
+    const resultOpenBtn = document.getElementById('resultOpenBtn');
 
-</body>
-</html>
+    function showResultPopup(name, link) {
+      resultName.textContent = name;
+      resultOpenBtn.onclick = () => window.open(link, "_blank");
+      resultPopup.style.display = 'block';
+      resultPopup.setAttribute('aria-hidden','false');
+    }
+    function hideResultPopup(){
+      resultPopup.style.display = 'none';
+      resultPopup.setAttribute('aria-hidden','true');
+    }
+
+    // ---------------------------
+    // Find nearest logic (reused)
+    // ---------------------------
+    function findNearestAndShow() {
+      if(!navigator.geolocation){
+        alert("⚠️ Browser tidak mendukung deteksi lokasi.");
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        let nearest = chargers[0];
+        let minDist = getDistance(lat,lng, nearest.lat, nearest.lng);
+        chargers.forEach(c=>{
+          const d = getDistance(lat,lng,c.lat,c.lng);
+          if(d < minDist){
+            minDist = d; nearest = c; minDist = d;
+          }
+        });
+        // show compact popup with just name + open maps
+        hideWelcome(); // in case it's open
+        showResultPopup(nearest.name, nearest.link);
+      }, err => {
+        alert("⚠️ Gagal mendeteksi lokasi. Pastikan izin lokasi aktif.");
+      }, {maximumAge:600000, timeout:10000});
+    }
+
+    // attach manual button
+    document.getElementById('manualFindBtn').addEventListener('click', () => {
+      findNearestAndShow();
