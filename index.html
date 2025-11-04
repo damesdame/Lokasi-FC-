@@ -567,3 +567,136 @@
     // attach manual button
     document.getElementById('manualFindBtn').addEventListener('click', () => {
       findNearestAndShow();
+    });
+
+    // open result popup close on outside click
+    document.addEventListener('click', (e)=>{
+      if(resultPopup.style.display === 'block' && !resultPopup.contains(e.target) && !e.target.classList.contains('find-btn')){
+        hideResultPopup();
+      }
+    });
+
+    // ---------------------------
+    // Help panel toggles
+    // ---------------------------
+    const helpBtn = document.getElementById('helpBtn');
+    const helpPanel = document.getElementById('helpPanel');
+    const closeHelp = document.getElementById('closeHelp');
+
+    helpBtn.addEventListener('click', ()=>{
+      helpPanel.style.right = helpPanel.style.right === '0px' ? '-320px' : '0px';
+    });
+    closeHelp.addEventListener('click', ()=> { helpPanel.style.right = '-320px'; });
+
+    // Ensure responsive placement of help button (if needed)
+    function adjustHelpPos(){
+      if(window.innerWidth < 600){
+        helpBtn.style.position='static';
+        helpBtn.style.display='block';
+        helpBtn.style.marginTop='8px';
+      } else {
+        helpBtn.style.position='absolute';
+        helpBtn.style.top='14px';
+        helpBtn.style.right='18px';
+        helpBtn.style.display='inline-block';
+      }
+    }
+    window.addEventListener('resize', adjustHelpPos);
+    adjustHelpPos();
+
+    // ---------------------------
+    // Welcome overlay (show once)
+    // ---------------------------
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    const welcomeFind = document.getElementById('welcomeFind');
+    const welcomeSOS  = document.getElementById('welcomeSOS');
+
+    function showWelcomeIfFirst(){
+      try {
+        const shown = localStorage.getItem('mlu_welcome_shown_v1');
+        if(!shown){
+          welcomeOverlay.style.display = 'flex';
+        }
+      } catch(e){ /* ignore storage errors */ }
+    }
+    function hideWelcome(){
+      welcomeOverlay.style.display = 'none';
+      try { localStorage.setItem('mlu_welcome_shown_v1','1'); } catch(e){}
+    }
+    // attach actions
+    welcomeFind.addEventListener('click', ()=>{
+      hideWelcome();
+      // trigger find
+      findNearestAndShow();
+    });
+    welcomeSOS.addEventListener('click', ()=>{
+      hideWelcome();
+      // open help panel
+      helpPanel.style.right = '0px';
+    });
+
+    // show welcome on DOM ready
+    document.addEventListener('DOMContentLoaded', ()=>{
+      showWelcomeIfFirst();
+    });
+
+    // ---------------------------
+    // Visitor counter (count visits only)
+    // Tries countapi.xyz first; if fails use localStorage fallback.
+    // ---------------------------
+    const countEl = document.getElementById('count');
+
+    async function updateVisitCounter(){
+      const namespace = 'mlu-charger';
+      const key = 'visits';
+      // try countapi
+      try {
+        const res = await fetch(`https://api.countapi.xyz/hit/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`);
+        if(!res.ok) throw new Error('countapi error');
+        const data = await res.json();
+        if(data && typeof data.value !== 'undefined'){
+          countEl.textContent = data.value.toLocaleString();
+          return;
+        }
+      } catch(err){
+        // fallback: use localStorage
+      }
+      // localStorage fallback: increment on each page load (visit)
+      try {
+        const localKey = 'mlu_visits_fallback_v1';
+        let val = parseInt(localStorage.getItem(localKey) || '0', 10);
+        val = isNaN(val) ? 1 : val + 1;
+        localStorage.setItem(localKey, val);
+        countEl.textContent = val.toLocaleString();
+      } catch(e){
+        // if even localStorage fails, just show dash
+        countEl.textContent = '—';
+      }
+    }
+
+    // call to update
+    updateVisitCounter();
+
+    // ---------------------------
+    // make sure welcome/controls ready if user interacts
+    // ---------------------------
+
+    // Close welcome if user presses Esc
+    document.addEventListener('keydown', e=>{
+      if(e.key === 'Escape'){
+        if(welcomeOverlay.style.display === 'flex'){ hideWelcome(); }
+        if(helpPanel.style.right === '0px'){ helpPanel.style.right = '-320px'; }
+        if(resultPopup.style.display === 'block'){ hideResultPopup(); }
+      }
+    });
+
+    // Accessibility: focus trap / first focus to welcome buttons if shown
+    welcomeFind.addEventListener('keyup', (e)=>{ if(e.key === 'Enter') welcomeFind.click(); });
+    welcomeSOS.addEventListener('keyup', (e)=>{ if(e.key === 'Enter') welcomeSOS.click(); });
+
+    // optional: hide result popup after 10s automatically to avoid blocking
+    setInterval(()=>{ if(resultPopup.style.display==='block'){ hideResultPopup(); } }, 15000);
+
+  </script>
+</body>
+</html>
