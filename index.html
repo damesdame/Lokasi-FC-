@@ -11,10 +11,13 @@
       --neon:#64ffda;
       --text:#e6f1ff;
       --card-bg: rgba(10,25,47,0.85);
+      --warn: #ff9a64; /* Oranye untuk lapor */
+      --info: #64bfff; /* Biru untuk CP */
     }
     
     html {
       height: 100%;
+      scroll-behavior: smooth;
     }
     body{
       min-height: 100%; 
@@ -156,17 +159,63 @@
       text-decoration: underline;
       font-weight: 600;
     }
-    .card-content a.nav-link{
-      display:inline-block;
-      margin-top:10px;
-      padding:8px 12px;
-      background:var(--neon);
-      color:var(--bg1);
-      font-weight:700;
-      text-decoration:none;
-      border-radius:8px;
-      font-size:0.85rem;
+    
+    /* GAYA BARU UNTUK 3 TOMBOL */
+    .card-actions {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px; 
+      flex-wrap: wrap;
     }
+    
+    .card-content a.nav-link{
+      padding: 8px 12px;
+      background: var(--neon);
+      color: var(--bg1);
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      flex-grow: 1; /* Biar tombol navigasi lebih besar */
+      text-align: center;
+      transition: all 0.2s ease;
+      margin-top: 0; 
+    }
+    .card-content a.nav-link:hover {
+      opacity: 0.85;
+    }
+    
+    .report-btn, .cp-btn {
+      padding: 8px 10px;
+      background: transparent;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    
+    .report-btn {
+      border: 1px solid var(--warn);
+      color: var(--warn);
+    }
+    .report-btn:hover {
+      background: rgba(255, 154, 100, 0.15);
+      color: #fff;
+    }
+    
+    .cp-btn {
+      border: 1px solid var(--info);
+      color: var(--info);
+    }
+    .cp-btn:hover {
+      background: rgba(100, 191, 255, 0.15);
+      color: #fff;
+    }
+    /* AKHIR GAYA BARU */
+
 
     /* Footer, Help Button, Help Panel */
     footer{
@@ -373,7 +422,7 @@
   <div id="toastNotification"></div>
 
   <script>
-        // Data Lokasi (Boleh di sini)
+        // Data Lokasi (Diperbarui dengan field 'cp' dan nomor CP Trans go Matraman)
     const chargers = [
       { name: "Kelapa Gading", lat: -6.159635, lng: 106.906682, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Radio Dalam", lat: -6.257621, lng: 106.802051, link: "https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
@@ -382,7 +431,6 @@
       { name: "Depok", lat: -6.402484, lng: 106.794240, link: "https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Marbella Kemang Residence", lat: -6.260627, lng: 106.813746, link: "https://maps.app.goo.gl/wwzT9iLS34WFRgyi9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir berbayar)" },
       
-      // --- KOORDINAT & LINK DIPERBAIKI ---
       { name: "Starvo PIK", lat: -6.124106, lng: 106.739785, link: "https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7", type: "Medium", nozzles: 2, hours: "Senin–Jumat 08.00–19.00; Sabtu 08.00–17.00", cost: 'Berbayar (via <a href="https://play.google.com/store/apps/details?id=com.moizasia.starvo_mobile" target="_blank">Starvo App</a>)' },
       
       { name: "Starvo Kedoya", lat: -6.186334, lng: 106.766978, link: "https://maps.app.goo.gl/HSKbMPz5UrwW178V9", type: "Medium", nozzles: 1, hours: "Senin–Jumat 09.00–17.00; Sabtu 09.00–14.00", cost: 'Berbayar (via <a href="https://starvo.co.id/" target="_blank">Starvo App</a>)' },
@@ -391,25 +439,32 @@
       { name: "Motoriz Meruya", lat: -6.200132, lng: 106.737796, link: "https://maps.app.goo.gl/xLqKRsEZ9WpBpTjf9", type: "Fast", nozzles: 2, hours: "09.00–19.00 WIB", cost: "Rp. 5.000 / jam" },
       { name: "Motoriz Kranggan", lat: -6.340640, lng: 106.943016, link: "https://maps.app.goo.gl/bA1248oJ5C8pUXhg9", type: "Fast", nozzles: 2, hours: "09.00–19.00 WIB", cost: 'Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)' },
       { name: "Warung Bu Ratna Cirendeu", lat: -6.310043, lng: 106.758325, link: "https://maps.app.goo.gl/Eyi3nNZHNMU64iYY7", type: "Fast", nozzles: 2, hours: "06.00–23.59", cost: "1k per 10%" },
-      { name: "Klinik Pratama Condet", lat: -6.295322, lng: 106.863682, link: "https://maps.app.goo.gl/hTwbD4wEKB8g5qnU8?g_st=ac", type: "Fast", nozzles: 2, hours: "07.00 - Sampe tukang martabak pulang", cost: 'Gratis' },
+      { name: "Klinik Pratama Condet", lat: -6.295322, lng: 106.863682, link: "https://maps.app.goo.gl/hTwbD4wEKB8g5qnU8?g_st=ac", type: "Fast", nozzles: 2, hours: "07.00 - Sampe tukang martabak pulang", cost: 'Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)' },
       
-      // --- KOORDINAT & LINK DIPERBAIKI ---
       { name: "Mister Kong Steam Wash", lat: -6.350800, lng: 106.830000, link: "https://maps.app.goo.gl/n6nUVbQzWay6f2MG6", type: "Fast", nozzles: 2, hours: "10.00 - 22.00", cost: 'Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)' },
       
-      // --- KOORDINAT, LINK & KOMA DIPERBAIKI ---
       { name: "Hotel Kartika Chandra", lat: -6.227645, lng: 106.819109, link: "https://maps.app.goo.gl/osYqkiaaebUoauxq5", type: "Fast", nozzles: 5, hours: "24 jam", cost: 'Berbayar (via <a href="https://play.google.com/store/apps/details?id=com.moizasia.starvo_mobile" target="_blank">Starvo App</a>)' },
       
       { name: "Suzuki Cengkareng", lat: -6.150602, lng: 106.727243, link: "https://maps.app.goo.gl/uy6GpcKEHUtQHoFz7?g_st", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Dem Pro Kalimalang", lat: -6.243608, lng: 106.902289, link: "https://maps.app.goo.gl/gKJaJv6qu28jUm659", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: "Gratis" },
-      { name: "Trans go Matraman", lat: -6.208959, lng: 106.878911, link: "https://maps.app.goo.gl/dZD5YVGP7NHFJ8bKA", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: "Gratis" }
       
-      
+      // LOKASI DENGAN TOMBOL CP TAMBAHAN
+      { 
+        name: "Trans go Matraman", 
+        lat: -6.208959, 
+        lng: 106.878911, 
+        link: "https://maps.app.goo.gl/dZD5YVGP7NHFJ8bKA", 
+        type: "Info CP", 
+        nozzles: "?", 
+        hours: "24 jam", 
+        cost: "Gratis, Info CP (Pemilik tempat)",
+        cp: "6285697279354" // Nomor CP untuk WhatsApp
+      }
     ];
 
 
-    // --- Definisi Fungsi (Boleh di sini) ---
+    // --- Definisi Fungsi ---
 
-    // Toast Notification Function
     let toastTimeout;
     function showToast(message) {
       const toast = document.getElementById('toastNotification');
@@ -423,7 +478,6 @@
       }, 3000);
     }
 
-    // Utility: getDistance
     function getDistance(lat1, lon1, lat2, lon2) {
       const R = 6371; // km
       const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -433,17 +487,35 @@
       return R * c;
     }
 
-    // Render Cards function (DIUBAH sedikit)
-    // Sekarang 'container' dikirim sebagai parameter
+    // Render Cards function (DIUBAH untuk tombol Aksi)
     function renderCards(list, container) {
-      if (!container) return; // Pengaman jika container null
+      if (!container) return; 
       container.innerHTML = '';
+      
+      if (list.length === 0) {
+        container.innerHTML = '<p style="color: var(--text); opacity: 0.7;">Lokasi tidak ditemukan...</p>';
+      }
+      
+      const adminWA = "6282310253644"; // Nomor untuk Laporan
+      
       list.forEach((charger, index) => {
         const card = document.createElement('details');
         card.className = 'card';
         card.style.animationDelay = (index * 50) + 'ms'; 
         const distanceHTML = charger.distance ? `<span class="card-distance">(📍 ${charger.distance.toFixed(1)} km)</span>` : '';
         
+        // Link Lapor
+        const reportText = `Lapor: Lokasi ${charger.name} sedang bermasalah. \n\n(Tolong jelaskan masalahnya, misal: mati, penuh, dll...)\n\n(Terkirim dari Web App Lokasi FC)`;
+        const reportLink = `https://wa.me/${adminWA}?text=${encodeURIComponent(reportText)}`;
+
+        // Logika Tombol CP
+        let cpButtonHTML = ''; 
+        if (charger.cp) {
+          const cpText = `Halo, saya mau tanya info charging/sewa motor di ${charger.name}.`;
+          const cpLink = `https://wa.me/${charger.cp}?text=${encodeURIComponent(cpText)}`;
+          cpButtonHTML = `<a href="${cpLink}" target="_blank" class="cp-btn">📞 Hubungi CP</a>`;
+        }
+
         card.innerHTML = `
           <summary>
             ⚡ ${charger.name}
@@ -454,7 +526,11 @@
             <p>🔋 Jumlah Nozzle: ${charger.nozzles}</p>
             <p>⏰ Operasional: ${charger.hours}</p>
             <p>💰 Biaya: ${charger.cost}</p>
-            <a href="${charger.link}" target="_blank" class="nav-link">📍 Buka Navigasi</a>
+            <div class="card-actions">
+              <a href="${charger.link}" target="_blank" class="nav-link">📍 Buka Navigasi</a>
+              <a href="${reportLink}" target="_blank" class="report-btn">⚠️ Laporkan</a>
+              ${cpButtonHTML}
+            </div>
           </div>
         `;
         container.appendChild(card);
@@ -486,11 +562,10 @@
       }
     }
 
-    // --- MAIN SCRIPT (Semua dipindah ke sini) ---
+    // --- MAIN SCRIPT ---
     
     document.addEventListener('DOMContentLoaded', ()=>{
       
-      // 1. Tentukan SEMUA variabel elemen DI DALAM sini
       const listContainer = document.querySelector('.list-container');
       const findBtn = document.getElementById('manualFindBtn');
       const helpBtn = document.getElementById('helpBtn');
@@ -501,8 +576,6 @@
       const welcomeSOS  = document.getElementById('welcomeSOS');
       const countEl = document.getElementById('count');
 
-      // 2. Definisikan fungsi yang butuh variabel di atas
-      
       // Find and Sort Logic
       function findAndSortCards() {
         if(!navigator.geolocation){
@@ -522,8 +595,8 @@
             c.distance = getDistance(lat, lng, c.lat, c.lng);
           });
 
-          chargers.sort((a, b) => a.distance - b.distance);
-          // Kirim listContainer ke fungsi render
+          chargers.sort((a, b) => (a.distance || 9999) - (b.distance || 9999));
+
           renderCards(chargers, listContainer); 
           
           findBtn.classList.remove('loading');
@@ -532,7 +605,7 @@
 
           const firstCard = listContainer.querySelector('.card');
           if (firstCard) {
-            firstCard.open = true;
+            setTimeout(() => { firstCard.open = true; }, 100);
           }
           showToast("✅ Daftar FC sudah diurutkan dari yang terdekat dgn lokasi anda sekarang!");
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -547,6 +620,7 @@
       
       // Welcome functions
       function showWelcomeIfFirst(){
+        if(!welcomeOverlay) return;
         try {
           const shown = localStorage.getItem('mlu_welcome_shown_v1');
           if(!shown){
@@ -555,41 +629,62 @@
         } catch(e){ /* ignore storage errors */ }
       }
       function hideWelcome(){
+        if(!welcomeOverlay) return;
         welcomeOverlay.style.display = 'none';
         try { localStorage.setItem('mlu_welcome_shown_v1','1'); } catch(e){}
       }
 
-      // 3. Pasang SEMUA listener DI DALAM sini
+      // --- PASANG SEMUA LISTENER ---
       
-      // Attach find button
+      if(listContainer) {
+        listContainer.addEventListener('click', (e) => {
+          if (e.target.tagName === 'SUMMARY') {
+            const currentDetail = e.target.closest('details');
+            const allDetails = listContainer.querySelectorAll('details');
+            
+            // Logika Accordion: Tutup semua kecuali yang sedang di-klik
+            allDetails.forEach(detail => {
+              if (detail !== currentDetail) {
+                detail.open = false;
+              }
+            });
+            // Biarkan native browser yang menangani klik pada currentDetail
+          }
+        });
+      }
+
       if(findBtn) findBtn.addEventListener('click', findAndSortCards);
 
-      // Help panel toggles
       if(helpBtn) helpBtn.addEventListener('click', ()=>{
-        helpPanel.style.right = helpPanel.style.right === '0px' ? '-320px' : '0px';
-        helpPanel.setAttribute('aria-hidden', helpPanel.style.right === '0px');
+        if (helpPanel) {
+          const isOpen = helpPanel.style.right === '0px';
+          helpPanel.style.right = isOpen ? '-320px' : '0px';
+          helpPanel.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
+        }
       });
       if(closeHelp) closeHelp.addEventListener('click', ()=> { 
-        helpPanel.style.right = '-320px'; 
-        helpPanel.setAttribute('aria-hidden', 'true');
+        if (helpPanel) {
+          helpPanel.style.right = '-320px'; 
+          helpPanel.setAttribute('aria-hidden', 'true');
+        }
       });
 
-      // Welcome overlay
       if(welcomeFind) welcomeFind.addEventListener('click', ()=>{
         hideWelcome();
         findAndSortCards();
       });
       if(welcomeSOS) welcomeSOS.addEventListener('click', ()=>{
         hideWelcome();
-        helpPanel.style.right = '0px';
-        helpPanel.setAttribute('aria-hidden', 'false');
+        if (helpPanel) {
+          helpPanel.style.right = '0px';
+          helpPanel.setAttribute('aria-hidden', 'false');
+        }
       });
 
-      // Global Event Listeners
       document.addEventListener('keydown', e=>{
         if(e.key === 'Escape'){
-          if(welcomeOverlay.style.display === 'flex'){ hideWelcome(); }
-          if(helpPanel.style.right === '0px'){ 
+          if(welcomeOverlay && welcomeOverlay.style.display === 'flex'){ hideWelcome(); }
+          if(helpPanel && helpPanel.style.right === '0px'){ 
             helpPanel.style.right = '-320px'; 
             helpPanel.setAttribute('aria-hidden', 'true');
           }
@@ -597,14 +692,8 @@
       });
 
       // 4. Jalankan kode inisialisasi
-      
-      // Render kartu awal
       renderCards(chargers, listContainer);
-      
-      // Tampilkan welcome jika ini kunjungan pertama
       showWelcomeIfFirst();
-      
-      // Jalankan visitor counter
       updateVisitCounter(countEl);
     });
 
