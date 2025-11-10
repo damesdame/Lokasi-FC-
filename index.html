@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="id">
 <head>
@@ -13,8 +14,6 @@
       --card-bg: rgba(10,25,47,0.85);
       --warn: #ff9a64;
       --info: #64bfff;
-      --success: #32cd32;
-      --danger: #dc143c;
     }
     
     html {
@@ -81,9 +80,10 @@
       box-shadow: none;
     }
 
-    /* SEARCH BOX STYLES (BARU) */
+    /* SEARCH BOX STYLES */
     .search-container {
       padding: 0 16px 12px 16px;
+      text-align: center;
     }
     #searchBox {
       width: calc(100% - 32px);
@@ -95,6 +95,7 @@
       color: var(--text);
       font-size: 1rem;
       transition: border-color 0.2s;
+      text-align: center;
     }
     #searchBox::placeholder {
       color: var(--text);
@@ -242,39 +243,6 @@
       color: #fff;
     }
     
-    /* GAYA STATUS LOKAL (STATUS YANG DISKIP) */
-    .local-status-container {
-        padding: 8px 0;
-        border-radius: 8px;
-        margin-bottom: 12px;
-    }
-    .local-status-display {
-        font-weight: 700;
-        text-align: center;
-        padding: 6px;
-        border-radius: 6px;
-        margin-bottom: 8px;
-    }
-    .status-available { background: var(--success); color: var(--bg1); }
-    .status-busy { background: var(--danger); color: #fff; }
-    .status-unknown { background: var(--bg2); color: var(--text); opacity: 0.7; }
-    
-    .local-status-actions {
-        display: flex;
-        gap: 8px;
-    }
-    .local-status-actions button {
-        padding: 6px 10px;
-        border-radius: 6px;
-        font-size: 0.8rem;
-        font-weight: 700;
-        cursor: pointer;
-        border: none;
-        flex-grow: 1;
-        transition: opacity 0.2s;
-    }
-    .btn-status-available { background: var(--success); color: var(--bg1); }
-    .btn-status-busy { background: var(--danger); color: #fff; }
 
     /* Footer, Help Button, Help Panel */
     footer{
@@ -422,7 +390,7 @@
       visibility: visible;
     }
 
-    /* Tombol "Back to Top" (SUDAH ADA) */
+    /* Tombol "Back to Top" */
     #toTopBtn {
       position: fixed;
       bottom: 80px; 
@@ -511,13 +479,9 @@
   <div id="toastNotification"></div>
 
   <script>
-    // Batas waktu status lokal dalam milidetik (30 menit) - Dibiarkan saja karena fungsi status di skip
-    const STATUS_EXPIRY = 30 * 60 * 1000; 
-    const LOCAL_STORAGE_KEY = 'mlu_charger_status';
-
     // Data Lokasi
     const chargers = [
-      { name: "Kelapa Gading", lat: -6.171655, lng: 106.898647, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
+      { name: "Kelapa Gading", lat: -6.159635, lng: 106.906682, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Radio Dalam", lat: -6.257621, lng: 106.802051, link: "https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Bekasi", lat: -6.243967, lng: 106.994823, link: "https://maps.app.goo.gl/4fdRXFebJHJW63Dg7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir Berbayar - Emoney)" },
       { name: "Gading Serpong", lat: -6.246792, lng: 106.629594, link: "https://maps.app.goo.gl/j5oeATswU7J9e9jj7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir Berbayar)" },
@@ -551,12 +515,14 @@
         type: "Fast", 
         nozzles: "2", 
         hours: "24 jam", 
-        cost: "Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)",
+        // PERUBAHAN DI SINI: Cost Matraman menjadi Berbayar via Casan.id
+        cost: 'Berbayar (via <a href="https://casan.id/" target="_blank">Casan.id</a>)',
         cp: "6285697279354" 
       }
     ];
 
-    let currentList = [...chargers]; // Menyimpan list yang sedang ditampilkan/dicari
+    let currentList = [...chargers];
+
     // --- Definisi Fungsi UTILITY ---
 
     let toastTimeout;
@@ -581,21 +547,19 @@
       return R * c;
     }
     
-    // --- FUNGSI SEARCH / FILTER (BARU) ---
+    // --- FUNGSI SEARCH / FILTER ---
     function filterCards(query) {
         const lowerQuery = query.toLowerCase().trim();
         const filteredList = chargers.filter(charger => {
-            // Gabungkan semua data charger menjadi satu string untuk pencarian
             const searchString = `${charger.name} ${charger.type} ${charger.hours} ${charger.cost} ${charger.cp || ''}`.toLowerCase();
             return searchString.includes(lowerQuery);
         });
         
-        // Simpan hasil filter ke currentList
         currentList = filteredList;
         renderCards(currentList, document.querySelector('.list-container'));
 
         if (currentList.length === 0 && lowerQuery.length > 0) {
-            showToast(`Tidak ditemukan lokasi dengan kata kunci "${query}"`);
+            // showToast dihapus dari sini untuk menghindari spam saat mengetik cepat, biarkan saja daftar kosong
         }
     }
 
@@ -617,19 +581,6 @@
         card.style.animationDelay = (index * 50) + 'ms'; 
         const distanceHTML = charger.distance ? `<span class="card-distance">(📍 ${charger.distance.toFixed(1)} km)</span>` : '';
         
-        // Status Lokal (Tetap ditampilkan sebagai "unknown" karena fitur di-skip)
-        const statusText = 'Status Charging: Belum Ada Info Lokal';
-        const statusClass = 'status-unknown';
-
-        const localStatusHTML = `
-            <div class="local-status-container">
-                <div class="local-status-display ${statusClass}">
-                    ${statusText}
-                </div>
-            </div>
-        `;
-
-
         // Link Lapor
         const reportText = `Lapor: Lokasi ${charger.name} sedang bermasalah. \n\n(Tolong jelaskan masalahnya, misal: mati, penuh, dll...)\n\n(Terkirim dari Web App Lokasi FC)`;
         const reportLink = `https://wa.me/${adminWA}?text=${encodeURIComponent(reportText)}`;
@@ -639,6 +590,7 @@
         if (charger.cp) {
           const cpText = `Halo, saya mau tanya info charging/sewa motor di ${charger.name}.`;
           const cpLink = `https://wa.me/${charger.cp}?text=${encodeURIComponent(cpText)}`;
+          // Menambahkan showToast pada event onclick untuk UX
           cpButtonHTML = `<a href="${cpLink}" target="_blank" class="cp-btn" onclick="showToast('Membuka WhatsApp ke Contact Person ${charger.name}')">📞 WA Pemilik</a>`;
         }
 
@@ -648,7 +600,6 @@
             ${distanceHTML}
           </summary>
           <div class="card-content">
-            ${localStatusHTML}
             <p>🔌 Tipe Charger: ${charger.type}</p>
             <p>🔋 Jumlah Nozzle: ${charger.nozzles}</p>
             <p>⏰ Operasional: ${charger.hours}</p>
@@ -677,7 +628,7 @@
           countEl.textContent = data.value.toLocaleString();
           return;
         }
-      } catch(err){ /* Fallback to local storage if API fails */ }
+      } catch(err){ }
       try {
         const localKey = 'mlu_visits_fallback_v1';
         let val = parseInt(localStorage.getItem(localKey) || '0', 10);
@@ -695,7 +646,7 @@
       
       const listContainer = document.querySelector('.list-container');
       const findBtn = document.getElementById('manualFindBtn');
-      const searchBox = document.getElementById('searchBox'); // Elemen baru
+      const searchBox = document.getElementById('searchBox');
       const helpBtn = document.getElementById('helpBtn');
       const helpPanel = document.getElementById('helpPanel');
       const closeHelp = document.getElementById('closeHelp');
@@ -703,7 +654,7 @@
       const welcomeFind = document.getElementById('welcomeFind');
       const welcomeSOS  = document.getElementById('welcomeSOS');
       const countEl = document.getElementById('count');
-      const toTopBtn = document.getElementById('toTopBtn'); // Elemen Back to Top
+      const toTopBtn = document.getElementById('toTopBtn');
 
       // Find and Sort Logic
       function findAndSortCards() {
@@ -725,9 +676,8 @@
           });
 
           chargers.sort((a, b) => (a.distance || 9999) - (b.distance || 9999));
-          currentList = [...chargers]; // Update currentList setelah sorting
+          currentList = [...chargers]; 
           
-          // Clear search box setelah sorting
           if (searchBox) searchBox.value = '';
 
           renderCards(currentList, listContainer); 
@@ -738,10 +688,9 @@
 
           const firstCard = listContainer.querySelector('.card');
           if (firstCard) {
-            // Scroll dan buka detail kartu pertama
             setTimeout(() => { 
                 firstCard.open = true; 
-                window.scrollTo({ top: firstCard.offsetTop - 50, behavior: 'smooth' }); // Scroll ke kartu pertama
+                window.scrollTo({ top: firstCard.offsetTop - 50, behavior: 'smooth' }); 
             }, 100);
           }
           showToast("✅ Daftar FC sudah diurutkan dari yang terdekat dgn lokasi anda sekarang!");
@@ -773,7 +722,7 @@
 
       // --- PASANG SEMUA LISTENER ---
       
-      // Logika Back to Top (MEMASTIKAN FUNGSI INI BERJALAN)
+      // Logika Back to Top
       if(toTopBtn) {
         window.onscroll = () => {
           if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
@@ -803,7 +752,7 @@
         });
       }
       
-      // Event listener untuk Search Box (BARU)
+      // Event listener untuk Search Box
       if(searchBox) {
           searchBox.addEventListener('input', (e) => {
               filterCards(e.target.value);
