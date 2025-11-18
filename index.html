@@ -30,7 +30,7 @@
       padding-bottom: 100px; 
     }
     
-    /* HEADER STICKY */
+    /* HEADER */
     header{
       padding: 15px 20px 5px 20px;
       background: rgba(255, 255, 255, 0.95);
@@ -42,7 +42,6 @@
     }
     
     .header-top { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-
     .logo-container img{ width: 80px; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
     
     header h1{
@@ -57,19 +56,13 @@
       padding: 6px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
     }
 
-    /* WEATHER WIDGET STYLE */
+    /* WEATHER WIDGET */
     #weatherWidget {
-      display: none; /* Hidden by default */
-      align-items: center; justify-content: center; gap: 8px;
+      display: none; align-items: center; justify-content: center; gap: 8px;
       background: linear-gradient(to right, #3b82f6, #06b6d4);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      margin-bottom: 10px;
-      font-size: 0.9rem; font-weight: 600;
-      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
-      animation: fadeInDown 0.5s ease;
-      width: fit-content;
+      color: white; padding: 8px 16px; border-radius: 20px; margin-bottom: 10px;
+      font-size: 0.9rem; font-weight: 600; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+      animation: fadeInDown 0.5s ease; width: fit-content;
     }
     @keyframes fadeInDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
 
@@ -167,9 +160,7 @@
       </div>
       <button id="helpBtnHeader">🆘 Bantuan</button>
     </div>
-    
     <div id="weatherWidget">Loading Cuaca...</div>
-
     <button class="find-btn" id="manualFindBtn">📍 Temukan Lokasi Terdekat</button>
   </header>
   
@@ -177,8 +168,7 @@
       <input type="text" id="searchBox" placeholder="🔍 Cari lokasi..." />
   </div>
 
-  <main class="list-container">
-    </main>
+  <main class="list-container"></main>
 
   <button id="floatingSosBtn">🆘</button>
   <button id="toTopBtn">⬆️</button>
@@ -188,6 +178,9 @@
       <p class="footer-intro">Created by :</p>
       <p class="footer-title">MLU Squad © 2025</p>
       <p class="footer-subtitle">Maka Lintas Utara</p>
+      <p style="margin-top: 5px; font-size: 0.7rem; color: #9ca3af;">
+         👤 <span id="visitorCount">...</span> Pengguna
+      </p>
     </div>
   </footer>
 
@@ -195,7 +188,7 @@
     <h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:10px;">Pusat Bantuan</h3>
     <div style="margin-top:15px;">
       <a href="https://wa.me/6287722285445?text=Halo%2C%20bantuan%20towing">🔧 CS (Kendala Unit)</a>
-      <a href="https://wa.me/6285117468556?text=Halo%2C%20info%20tagihan">💳 Tanya Tagihan / Xendit</a>
+      <a href="https://wa.me/6285117468556?text=Halo%2C%20info%20tagihan">💳 Admin Tagihan / Xendit</a>
       <a href="https://wa.me/6285281760728">👑 Chat Akbar (RTO)</a>
       <a href="https://wa.me/6282310253644">👑 Chat Ilham (Ketum)</a>
     </div>
@@ -214,7 +207,6 @@
   <div id="toastNotification"></div>
 
   <script>
-    // DATA LOKASI
     const chargers = [
       { name: "Kelapa Gading", lat: -6.171583, lng: 106.899884, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Radio Dalam", lat: -6.257621, lng: 106.802051, link: "https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
@@ -255,35 +247,57 @@
       return R * c;
     }
 
-    // --- FUNGSI BARU: FETCH CUACA (OPEN-METEO API) ---
     async function fetchWeather(lat, lng) {
         const widget = document.getElementById('weatherWidget');
-        widget.style.display = 'flex'; // Munculkan widget
+        widget.style.display = 'flex';
         widget.innerHTML = '⏳ Cek Cuaca...';
-
         try {
             const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true`);
             const data = await response.json();
-            
             if(data.current_weather) {
                 const temp = data.current_weather.temperature;
                 const code = data.current_weather.weathercode;
-                let icon = '☁️';
-                let desc = 'Berawan';
-
-                // Simple Weather Code Mapping
+                let icon = '☁️', desc = 'Berawan';
                 if (code === 0) { icon = '☀️'; desc = 'Cerah'; }
                 else if (code >= 1 && code <= 3) { icon = '⛅'; desc = 'Berawan'; }
                 else if (code >= 51 && code <= 67) { icon = '🌧️'; desc = 'Hujan Ringan'; }
                 else if (code >= 80 && code <= 99) { icon = '⛈️'; desc = 'Hujan/Badai'; }
                 else if (code >= 71) { icon = '❄️'; desc = 'Dingin'; }
-
                 widget.innerHTML = `${icon} ${desc} • ${temp}°C`;
             }
         } catch (error) {
             widget.innerHTML = '⚠️ Gagal muat cuaca';
-            console.error(error);
         }
+    }
+
+    // --- SCRIPT VISITOR COUNTER REAL USER ---
+    async function updateVisitCounter(countEl) {
+      if (!countEl) return;
+      const namespace = 'mlu-charging-app-final'; 
+      const key = 'visits';
+      const localToken = 'mlu_visited_real'; 
+
+      try {
+        const isReturningUser = localStorage.getItem(localToken);
+        let url = '';
+        if (isReturningUser) {
+          url = `https://api.countapi.xyz/get/${namespace}/${key}`;
+        } else {
+          url = `https://api.countapi.xyz/hit/${namespace}/${key}`;
+          localStorage.setItem(localToken, 'true');
+        }
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        if(data && typeof data.value !== 'undefined'){
+          countEl.textContent = data.value.toLocaleString();
+        } else {
+          countEl.textContent = "1"; 
+        }
+      } catch(err){
+        console.error("Gagal muat counter", err);
+        countEl.textContent = "—"; 
+      }
     }
 
     function renderCards(list) {
@@ -295,13 +309,11 @@
         const card = document.createElement('details');
         card.className = 'card';
         card.style.animationDelay = (index * 50) + 'ms'; 
-        
         const reportLink = `https://wa.me/6287722285445?text=${encodeURIComponent(`Lapor: ${charger.name} bermasalah.`)}`;
         let cpBtnHTML = '';
         if (charger.cp) {
             cpBtnHTML = `<a href="https://wa.me/${charger.cp}" target="_blank" class="cp-btn">📞 Hubungi CP</a>`;
         }
-
         card.innerHTML = `
           <summary>
             <div style="display:flex; align-items:center;">
@@ -330,6 +342,9 @@
       const floatingSosBtn = document.getElementById('floatingSosBtn');
       const toTopBtn = document.getElementById('toTopBtn');
       
+      // Update Visitor Counter
+      updateVisitCounter(document.getElementById('visitorCount'));
+
       window.addEventListener('scroll', () => {
         const scrollY = window.scrollY || document.documentElement.scrollTop;
         if (scrollY > 100) {
@@ -354,10 +369,7 @@
         findBtn.innerHTML = '⏳ Mencari...';
         navigator.geolocation.getCurrentPosition(pos => {
           const {latitude: lat, longitude: lng} = pos.coords;
-          
-          // --- PANGGIL FUNGSI CUACA DI SINI ---
           fetchWeather(lat, lng);
-
           chargers.forEach(c => c.distance = getDistance(lat, lng, c.lat, c.lng));
           chargers.sort((a, b) => a.distance - b.distance);
           renderCards([...chargers]);
@@ -366,7 +378,6 @@
              const first = document.querySelector('details');
              if(first) {
                  first.open = true;
-                 // Scroll disesuaikan karena ada widget cuaca baru
                  window.scrollTo({top: first.offsetTop - 180, behavior: 'smooth'});
              }
           }, 300);
