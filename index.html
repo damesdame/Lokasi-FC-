@@ -22,7 +22,7 @@
 
     /* Dark Mode Variables */
     body.dark-mode {
-      --bg-body: #0f172a; /* Dark Blue/Grey */
+      --bg-body: #0f172a;
       --card-bg: #1e293b;
       --text-main: #f1f5f9;
       --text-sec: #94a3b8;
@@ -39,7 +39,8 @@
       color: var(--text-main);
       transition: background 0.3s, color 0.3s;
       text-align: center;
-      padding-bottom: 100px; 
+      /* PERBAIKAN 3: Padding bawah diperbesar agar list tidak ketutup tombol SOS */
+      padding-bottom: 160px; 
     }
     
     /* HEADER STICKY */
@@ -63,7 +64,6 @@
       text-align: left; line-height: 1.2;
     }
 
-    /* Header Buttons Group */
     .header-actions { display: flex; gap: 8px; }
     .icon-btn {
       background: transparent; border: 1px solid var(--text-sec); color: var(--text-main);
@@ -71,7 +71,6 @@
     }
     .icon-btn:hover { background: var(--bg-body); transform: scale(1.05); }
 
-    /* WIDGET CUACA */
     #weatherWidget {
       display: none; align-items: center; justify-content: center; gap: 6px;
       background: linear-gradient(to right, #3b82f6, #06b6d4);
@@ -80,7 +79,6 @@
       animation: fadeIn 0.5s ease;
     }
 
-    /* TOMBOL UTAMA */
     .find-btn{
       padding: 12px; width: 100%;
       background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
@@ -90,22 +88,22 @@
     }
     .find-btn:active{ transform: scale(0.98); }
 
-    /* FILTER CHIPS (Fitur No 2) */
+    /* FILTER CHIPS UPDATE */
     .filter-scroll {
       display: flex; gap: 10px; padding: 0 20px; margin: 15px 0;
-      overflow-x: auto; scrollbar-width: none; /* Hide scrollbar */
-      justify-content: center;
+      overflow-x: auto; scrollbar-width: none;
+      justify-content: center; /* Tengahkan chip */
     }
     .filter-chip {
-      padding: 8px 16px; border-radius: 20px; border: 1px solid var(--text-sec);
+      padding: 8px 18px; border-radius: 20px; border: 1px solid var(--text-sec);
       background: var(--card-bg); color: var(--text-main); font-size: 0.85rem; font-weight: 500;
-      white-space: nowrap; cursor: pointer; transition: all 0.2s;
+      white-space: nowrap; cursor: pointer; transition: all 0.2s; opacity: 0.7;
     }
     .filter-chip.active {
-      background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+      background: var(--primary); color: white; border-color: var(--primary); 
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3); opacity: 1; font-weight: 600;
     }
 
-    /* LIST & CARD */
     main.list-container{ display: flex; flex-direction: column; gap: 14px; padding: 0 20px; max-width: 800px; margin: 0 auto; }
 
     .card{
@@ -122,10 +120,9 @@
     }
     .card summary::-webkit-details-marker { display: none; }
 
-    /* Indikator Buka/Tutup (Fitur No 1) */
     .status-dot {
-      height: 10px; width: 10px; background-color: #ccc; border-radius: 50%; display: inline-block; margin-right: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      height: 10px; width: 10px; background-color: #ccc; border-radius: 50%; display: inline-block; margin-right: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2); flex-shrink: 0;
     }
     .status-open { background-color: var(--success); box-shadow: 0 0 8px var(--success); }
     .status-closed { background-color: var(--danger); }
@@ -141,7 +138,6 @@
     .report-btn { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
     .cp-btn { background: rgba(6, 182, 212, 0.1); color: var(--accent); border: 1px solid rgba(6, 182, 212, 0.3); }
 
-    /* FLOATING SOS */
     #floatingSosBtn {
       position: fixed; bottom: 90px; right: 20px; width: 55px; height: 55px;
       background: var(--danger); color: white; border: none; border-radius: 50%; font-size: 1.5rem;
@@ -154,14 +150,12 @@
 
     #toTopBtn { position: fixed; bottom: 30px; right: 28px; width: 40px; height: 40px; background: var(--card-bg); color: var(--primary); border: 1px solid var(--text-sec); border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 940; display: none; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 
-    /* FOOTER */
     footer{
       position: fixed; bottom: 0; left: 0; width: 100%; background: var(--card-bg); padding: 10px;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.05); z-index: 900; border-top: 1px solid rgba(0,0,0,0.05);
     }
     .footer-text { font-size: 0.75rem; color: var(--text-sec); margin: 2px 0; }
 
-    /* UTILS */
     #helpPanel{
       position: fixed; top: 0; right: -340px; width: 280px; height: 100%;
       background: var(--card-bg); box-shadow: -5px 0 30px rgba(0,0,0,0.2); padding: 25px; transition: right 0.3s ease; z-index: 1100; text-align: left; color: var(--text-main);
@@ -182,7 +176,7 @@
     <div class="header-row">
       <div class="logo-area">
         <img src="mlu-logo.png" alt="MLU" id="mluLogo" onerror="this.style.display='none';">
-        <h1>Lokasi Fast Charging<br><span style="font-size:0.7em; font-weight:400; color:var(--text-sec)">Maka Lintas Utara</span></h1>
+        <h1>Lokasi FC<br><span style="font-size:0.7em; font-weight:400; color:var(--text-sec)">Maka Lintas Utara</span></h1>
       </div>
       <div class="header-actions">
         <button class="icon-btn" id="themeToggle" title="Ganti Tema">🌙</button>
@@ -195,14 +189,13 @@
   </header>
 
   <div class="filter-scroll">
-    <div class="filter-chip active" onclick="filterData('all', this)">Semua</div>
-    <div class="filter-chip" onclick="filterData('gratis', this)">💸 Gratis</div>
-    <div class="filter-chip" onclick="filterData('24jam', this)">⏰ 24 Jam</div>
-    <div class="filter-chip" onclick="filterData('fast', this)">⚡ Fast Only</div>
+    <div class="filter-chip" onclick="toggleFilter('gratis', this)">💸 Gratis</div>
+    <div class="filter-chip" onclick="toggleFilter('24jam', this)">⏰ 24 Jam</div>
+    <div class="filter-chip" onclick="toggleFilter('fast', this)">⚡ Fast Only</div>
   </div>
 
-  <div style="padding: 0 20px 10px 20px; display:none;" id="searchContainer">
-     <input type="text" id="searchBox" placeholder="Cari spesifik..." style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+  <div style="display:none;" id="searchContainer">
+     <input type="text" id="searchBox">
   </div>
 
   <main class="list-container"></main>
@@ -223,9 +216,9 @@
     <div style="margin-top:15px;">
       <a href="https://wa.me/6287722285445?text=Halo%2C%20bantuan%20towing">🔧 Towing / Kendala Unit</a>
       <a href="https://wa.me/6285117468556?text=Halo%2C%20info%20tagihan">💳 Admin Tagihan</a>
-      <a href="https://wa.me/6285281760728">👑 Chat Akbar (RTO)</a>
-      <a href="https://wa.me/6282310253644">👑 Chat Ilham (Ketum)</a>
-      <a href="https://wa.me/6282128835198">👑 Ogi (URC)</a>
+      <a href="https://wa.me/6285281760728">🧒 Akbar (RTO)</a>
+      <a href="https://wa.me/6282310253644">🥷 Ilham (Ketum)</a>
+      <a href="https://wa.me/6282128835198">🚨 Ogi (URC)</a>
     </div>
     <button id="closeHelp" style="margin-top:20px; width:100%; padding:10px; border:none; background:var(--bg-body); color:var(--text-main); border-radius:8px; cursor:pointer;">Tutup</button>
   </div>
@@ -246,7 +239,10 @@
     const chargers = [
       { name: "Kelapa Gading", lat: -6.171583, lng: 106.899884, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Radio Dalam", lat: -6.257621, lng: 106.802051, link: "https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
-      { name: "Bekasi", lat: -6.223919, lng: 106.010150, link: "https://maps.app.goo.gl/4fdRXFebJHJW63Dg7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir Berbayar)" },
+      
+      // PERBAIKAN 2: KOORDINAT BEKASI DIPERBAIKI (Dulu 106.01 [Banten] -> Jadi 106.99 [Bekasi Kota])
+      { name: "Bekasi", lat: -6.238270, lng: 106.975573, link: "https://maps.app.goo.gl/4fdRXFebJHJW63Dg7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir Berbayar)" },
+      
       { name: "Gading Serpong", lat: -6.246792, lng: 106.629594, link: "https://maps.app.goo.gl/j5oeATswU7J9e9jj7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir Berbayar)" },
       { name: "Depok", lat: -6.402484, lng: 106.794240, link: "https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Marbella Kemang", lat: -6.260627, lng: 106.813746, link: "https://maps.app.goo.gl/wwzT9iLS34WFRgyi9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir berbayar)" },
@@ -277,32 +273,21 @@
       setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    // --- FITUR NO 1: LOGIKA BUKA/TUTUP (SMART CHECK) ---
     function getStatusColor(hoursString) {
         const now = new Date();
         const currentHour = now.getHours();
         const str = hoursString.toLowerCase();
-
-        // 1. Jika ada kata "24 jam" -> Selalu Buka (Hijau)
         if(str.includes("24 jam")) return "status-open";
-
-        // 2. Ekstrak angka jam (misal "09.00" -> 9)
-        // Mencari pola angka jam pertama dan kedua
         const times = str.match(/(\d{2})[:.]\d{2}/g);
-        
         if (times && times.length >= 2) {
-            const openTime = parseInt(times[0].slice(0,2)); // Jam buka
-            const closeTime = parseInt(times[1].slice(0,2)); // Jam tutup
-            
-            // Logika sederhana: jika jam sekarang di antara buka dan tutup
+            const openTime = parseInt(times[0].slice(0,2));
+            const closeTime = parseInt(times[1].slice(0,2));
             if(currentHour >= openTime && currentHour < closeTime) {
                 return "status-open";
             } else {
                 return "status-closed";
             }
         }
-        
-        // Default jika format jam tidak terbaca mesin -> Anggap Netral/Tutup (Merah)
         return "status-closed";
     }
 
@@ -320,24 +305,37 @@
       return R * c;
     }
 
-    // --- FILTER DATA ---
-    function filterData(category, element) {
-        // Ubah tampilan chip aktif
+    // --- LOGIKA FILTER TOGGLE ---
+    function toggleFilter(category, element) {
+        const isActive = element.classList.contains('active');
+        
+        // Reset semua filter visual
         document.querySelectorAll('.filter-chip').forEach(el => el.classList.remove('active'));
-        element.classList.add('active');
-        currentFilter = category;
 
+        if (isActive) {
+            // Jika diklik saat aktif -> Matikan filter (Show All)
+            currentFilter = 'all';
+        } else {
+            // Jika belum aktif -> Aktifkan filter ini
+            element.classList.add('active');
+            currentFilter = category;
+        }
+        
+        applyFilter();
+    }
+
+    function applyFilter() {
         let filteredList = chargers;
 
-        if (category === 'gratis') {
+        if (currentFilter === 'gratis') {
             filteredList = chargers.filter(c => c.cost.toLowerCase().includes('gratis'));
-        } else if (category === '24jam') {
+        } else if (currentFilter === '24jam') {
             filteredList = chargers.filter(c => c.hours.toLowerCase().includes('24 jam'));
-        } else if (category === 'fast') {
+        } else if (currentFilter === 'fast') {
             filteredList = chargers.filter(c => c.type.toLowerCase().includes('fast'));
         }
 
-        // Tetap urutkan berdasarkan jarak jika lokasi user sudah ada
+        // Sort ulang jika user location ada
         if(userLat && userLng) {
             filteredList.sort((a, b) => (a.distance || 9999) - (b.distance || 9999));
         }
@@ -358,7 +356,6 @@
         card.className = 'card';
         card.style.animationDelay = (index * 50) + 'ms'; 
         
-        // Cek Status Buka/Tutup
         const statusClass = getStatusColor(charger.hours);
         const statusLabel = getStatusText(statusClass);
 
@@ -388,7 +385,6 @@
       });
     }
 
-    // --- DARK MODE LOGIC ---
     const themeBtn = document.getElementById('themeToggle');
     themeBtn.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
@@ -396,18 +392,15 @@
         themeBtn.textContent = isDark ? '☀️' : '🌙';
         localStorage.setItem('mlu_theme', isDark ? 'dark' : 'light');
     });
-    // Load saved theme
     if(localStorage.getItem('mlu_theme') === 'dark'){
         document.body.classList.add('dark-mode');
         themeBtn.textContent = '☀️';
     }
 
-    // --- VISITOR COUNTER ---
     async function updateCounter() {
         try {
             const el = document.getElementById('visitorCount');
-            // Pake namespace public demo biar langsung jalan, nanti ganti namespace sendiri
-            const res = await fetch(`https://api.countapi.xyz/hit/mlu-squad-v3/visits`);
+            const res = await fetch(`https://api.countapi.xyz/hit/mlu-squad-v4/visits`);
             const data = await res.json();
             el.textContent = data.value || "1";
         } catch(e) { document.getElementById('visitorCount').textContent = "—"; }
@@ -418,21 +411,18 @@
       const findBtn = document.getElementById('manualFindBtn');
       const helpPanel = document.getElementById('helpPanel');
       
-      // Scroll Events
       window.addEventListener('scroll', () => {
         const y = window.scrollY;
         document.getElementById('floatingSosBtn').classList.toggle('show', y > 100);
         document.getElementById('toTopBtn').style.display = y > 100 ? 'block' : 'none';
       });
 
-      // Help Panel
       const toggleHelp = (show) => { helpPanel.style.right = show ? '0px' : '-340px'; };
       document.getElementById('helpBtnHeader').onclick = () => toggleHelp(true);
       document.getElementById('floatingSosBtn').onclick = () => toggleHelp(true);
       document.getElementById('closeHelp').onclick = () => toggleHelp(false);
       document.getElementById('welcomeSOS').onclick = () => { document.getElementById('welcomeOverlay').style.display='none'; toggleHelp(true); };
 
-      // Find Location Logic
       findBtn.addEventListener('click', () => {
         if(!navigator.geolocation) return showToast("GPS tidak aktif");
         findBtn.innerHTML = '⏳ Mencari...';
@@ -441,7 +431,6 @@
             userLat = pos.coords.latitude;
             userLng = pos.coords.longitude;
             
-            // Fetch Weather
             fetch(`https://api.open-meteo.com/v1/forecast?latitude=${userLat}&longitude=${userLng}&current_weather=true`)
              .then(r=>r.json()).then(d=>{
                 const w = document.getElementById('weatherWidget');
@@ -449,28 +438,22 @@
                 if(d.current_weather) w.innerHTML = `${d.current_weather.weathercode < 3 ? '☀️' : '☁️'} ${d.current_weather.temperature}°C`;
              });
 
-            // Hitung Jarak
             chargers.forEach(c => c.distance = getDistance(userLat, userLng, c.lat, c.lng));
-            
-            // Apply Filter (Default: All, but sorted)
-            filterData(currentFilter, document.querySelector('.filter-chip.active'));
-            
+            applyFilter(); 
             findBtn.innerHTML = '✅ Lokasi Ditemukan';
             
         }, () => { findBtn.innerHTML = '📍 Temukan Lokasi'; showToast("Gagal deteksi lokasi"); });
       });
 
       document.getElementById('toTopBtn').onclick = () => window.scrollTo({top:0});
-      
       document.getElementById('welcomeFind').onclick = () => {
           document.getElementById('welcomeOverlay').style.display='none';
           findBtn.click();
       };
 
-      if(!localStorage.getItem('mlu_v6')) document.getElementById('welcomeOverlay').style.display='flex';
-      localStorage.setItem('mlu_v6','1');
+      if(!localStorage.getItem('mlu_v7')) document.getElementById('welcomeOverlay').style.display='flex';
+      localStorage.setItem('mlu_v7','1');
 
-      // Initial Render
       renderCards(chargers);
     });
   </script>
