@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>Lokasi FC MAKA - Modern</title>
+  <title>Lokasi FC MAKA</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      /* Warna Tema */
+      /* Color Palette */
       --bg-gradient: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
       --card-bg: #ffffff;
       --primary: #2563eb; 
       --accent: #06b6d4; 
       --text-main: #1f2937; 
       --text-sec: #6b7280; 
-      --danger: #ef4444; /* Merah untuk SOS */
+      --danger: #ef4444;
       --radius: 16px;
       --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
     }
@@ -29,94 +29,104 @@
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
       text-align: center;
-      padding-bottom: 100px; /* Ruang ekstra agar konten paling bawah tidak tertutup footer/tombol */
+      padding-bottom: 100px; 
     }
     
-    /* HEADER - TIDAK STICKY LAGI (Ikut Scroll) */
+    /* HEADER STICKY (MENEMPEL) */
     header{
-      padding: 20px 20px 5px 20px;
-      background: rgba(255, 255, 255, 0.5);
-      /* position: sticky;  <-- DIHAPUS agar ikut scroll */
-      position: relative; 
+      padding: 15px 20px 10px 20px;
+      background: rgba(255, 255, 255, 0.95); /* Sedikit transparan */
+      backdrop-filter: blur(8px); /* Efek blur di belakang header */
+      position: sticky; /* Kunci agar menempel */
+      top: 0;
+      z-index: 1000; /* Pastikan di atas konten lain */
       border-bottom: 1px solid rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     }
     
+    .header-top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
     .logo-container img{
-      width: 90px;
+      width: 80px; /* Ukuran logo sedikit diperkecil agar pas saat sticky */
       height: auto;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
     }
     
     header h1{
-      margin: 10px 0;
-      font-size: 1.4rem;
+      margin: 0;
+      font-size: 1.2rem;
       font-weight: 800;
       background: -webkit-linear-gradient(45deg, var(--primary), var(--accent));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-align: left;
+      margin-left: 10px;
+      line-height: 1.2;
     }
 
-    /* Tombol Bantuan di Header (Hanya muncul saat di atas) */
+    /* Tombol Bantuan Kecil di Header */
     #helpBtnHeader {
-      background: white;
-      color: var(--text-main);
-      border: 1px solid #e5e7eb;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #dbeafe;
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      position: absolute;
-      right: 20px; top: 20px;
     }
 
     /* TOMBOL TEMUKAN */
     .find-btn{
-      padding: 12px 24px;
-      margin: 5px auto 15px auto;
-      display: inline-block;
+      padding: 10px 20px;
+      width: 100%;
       background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
       border: none;
       color: white;
-      border-radius: 50px;
+      border-radius: 12px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 0.95rem;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      font-size: 0.9rem;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
       transition: transform 0.2s;
-      min-width: 220px;
     }
     .find-btn:active{ transform: scale(0.98); }
 
-    /* SEARCH BOX FULL WIDTH */
+    /* SEARCH BOX */
     .search-container {
-      padding: 10px 20px 20px 20px;
+      padding: 15px 20px;
       display: flex; justify-content: center;
     }
     #searchBox {
       width: 100%; max-width: 800px;
-      padding: 14px 20px;
+      padding: 12px 20px;
       border: 1px solid #e5e7eb;
-      border-radius: var(--radius);
-      font-size: 1rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
       box-shadow: var(--shadow-soft);
       text-align: center;
       outline: none;
-      transition: border 0.3s;
+      background: white;
     }
     #searchBox:focus { border-color: var(--primary); }
 
     /* LIST CONTAINER */
     main.list-container{
-      display: flex; flex-direction: column; gap: 16px;
+      display: flex; flex-direction: column; gap: 12px;
       padding: 0 20px 20px 20px;
       max-width: 800px; margin: 0 auto;
     }
 
-    /* KARTU LOKASI */
+    /* CARD STYLE */
     .card{
       background: var(--card-bg);
       border-radius: var(--radius);
@@ -128,150 +138,143 @@
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     
     .card summary {
-      padding: 18px 20px;
+      padding: 16px 20px;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 1rem;
       cursor: pointer;
       list-style: none;
       display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.2s;
     }
+    .card summary:hover { background: #f9fafb; }
     .card summary::-webkit-details-marker { display: none; }
     .card summary::after {
       content: '+'; color: var(--primary);
       background: rgba(37, 99, 235, 0.1);
-      width: 30px; height: 30px; border-radius: 50%;
+      width: 28px; height: 28px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       transition: transform 0.3s;
     }
     .card[open] summary::after { content: '−'; transform: rotate(180deg); background: var(--primary); color: white; }
     
     .card-distance {
-      font-size: 0.8rem; color: var(--primary);
+      font-size: 0.75rem; color: var(--primary);
       background: rgba(37, 99, 235, 0.08);
-      padding: 4px 8px; border-radius: 8px; margin-left: 8px;
+      padding: 3px 8px; border-radius: 6px; margin-left: 8px;
     }
     .card-content { padding: 0 20px 20px 20px; border-top: 1px solid #f3f4f6; }
     .card-content p { margin: 8px 0; font-size: 0.9rem; color: var(--text-sec); }
     
-    .card-actions { margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .nav-link { grid-column: 1 / -1; background: var(--primary); color: white; padding: 12px; border-radius: 10px; text-align: center; text-decoration: none; font-weight: 600; }
-    .report-btn { background: #fff1f2; color: var(--danger); border: 1px solid #fecdd3; padding: 10px; border-radius: 10px; text-align: center; text-decoration: none; font-weight: 600; font-size: 0.85rem;}
-    .cp-btn { background: #ecfeff; color: var(--accent); border: 1px solid #cffafe; padding: 10px; border-radius: 10px; text-align: center; text-decoration: none; font-weight: 600; font-size: 0.85rem;}
+    /* --- PERBAIKAN TOMBOL SATU BARIS --- */
+    .card-actions { 
+      margin-top: 15px; 
+      display: flex; /* Menggunakan Flexbox agar sejajar */
+      gap: 10px; 
+      width: 100%;
+      flex-wrap: wrap; /* Jaga-jaga jika layar sangat kecil */
+    }
+    
+    .nav-link, .report-btn, .cp-btn { 
+      flex: 1; /* Membagi ruang sama rata */
+      padding: 12px 5px; 
+      border-radius: 10px; 
+      text-align: center; 
+      text-decoration: none; 
+      font-weight: 600; 
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap; /* Agar teks tidak turun ke bawah */
+    }
+    
+    .nav-link { background: var(--primary); color: white; box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2); }
+    .report-btn { background: #fff1f2; color: var(--danger); border: 1px solid #fecdd3; }
+    .cp-btn { background: #ecfeff; color: var(--accent); border: 1px solid #cffafe; flex-basis: 100%; /* CP Button pindah ke bawah jika ada */ margin-top: 5px;}
 
-    /* TOMBOL LAMPU MERAH (FLOATING SOS) */
+    /* TOMBOL LAMPU MERAH (SOS) */
     #floatingSosBtn {
-      position: fixed;
-      bottom: 100px; /* Posisi di atas footer */
-      right: 20px;
+      position: fixed; bottom: 90px; right: 20px;
       width: 55px; height: 55px;
-      background: var(--danger);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 1.8rem;
+      background: var(--danger); color: white;
+      border: none; border-radius: 50%;
+      font-size: 1.5rem;
       box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
-      z-index: 950;
-      display: flex; align-items: center; justify-content: center;
+      z-index: 950; display: flex; align-items: center; justify-content: center;
       cursor: pointer;
-      /* Awalnya hidden (muncul saat scroll) */
       opacity: 0; pointer-events: none; transform: scale(0.5);
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       animation: pulse-red 2s infinite;
     }
-    #floatingSosBtn.show {
-      opacity: 1; pointer-events: auto; transform: scale(1);
-    }
+    #floatingSosBtn.show { opacity: 1; pointer-events: auto; transform: scale(1); }
     @keyframes pulse-red {
       0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
       70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
       100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
-    /* TOMBOL BACK TO TOP (Kecil di bawah SOS) */
-    #toTopBtn {
-      position: fixed; bottom: 40px; right: 25px;
-      width: 40px; height: 40px;
-      background: white; color: var(--primary);
-      border: 1px solid #e5e7eb; border-radius: 50%;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      font-size: 1.2rem; cursor: pointer; z-index: 940; 
-      display: none; /* Dikontrol JS */
-    }
-
-    /* FOOTER FIXED */
+    /* FOOTER */
     footer{
       position: fixed; bottom: 0; left: 0; width: 100%;
-      background: white; padding: 10px;
+      background: white; padding: 12px;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
       display: flex; justify-content: center; z-index: 900;
       border-top: 1px solid #f3f4f6;
     }
+    .footer-intro { font-size: 0.7rem; color: var(--text-sec); margin: 0 0 2px 0; opacity: 0.8; }
     .footer-title { font-weight: 700; color: var(--primary); margin: 0; font-size: 0.9rem; }
     .footer-subtitle { font-size: 0.7rem; color: var(--text-sec); margin: 0; }
 
-    /* PANEL BANTUAN */
+    /* PANEL & MODAL */
     #helpPanel{
       position: fixed; top: 0; right: -340px;
       width: 280px; height: 100%;
       background: rgba(255, 255, 255, 0.98);
       box-shadow: -5px 0 30px rgba(0,0,0,0.15);
       padding: 25px;
-      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 1000; text-align: left;
+      transition: right 0.3s ease;
+      z-index: 1100; text-align: left;
     }
-    #helpPanel a { 
-        display: block; background: #eff6ff; color: var(--primary); 
-        padding: 12px; border-radius: 12px; margin-top: 8px;
-        text-decoration: none; font-weight: 600; font-size: 0.9rem;
-    }
+    #helpPanel a { display: block; background: #eff6ff; color: var(--primary); padding: 12px; border-radius: 12px; margin-top: 8px; text-decoration: none; font-weight: 600; }
+    
+    #welcomeOverlay{ position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+    #welcomeBox{ background: white; padding: 30px; border-radius: 24px; width: 85%; max-width: 350px; text-align: center; }
+    .btn-welcome-primary { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; margin-top:10px; font-weight: 600;}
+    .btn-welcome-alt { background: transparent; color: var(--danger); border: 2px solid #fecdd3; padding: 12px; width: 100%; border-radius: 10px; margin-top:8px; font-weight: 600;}
 
-    /* MODAL WELCOME */
-    #welcomeOverlay{
-      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; z-index: 2000;
-    }
-    #welcomeBox{
-      background: white; padding: 30px; border-radius: 24px;
-      width: 85%; max-width: 350px; text-align: center;
-    }
-    .btn-welcome-primary { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; margin-top: 10px; font-weight: 600; }
-    .btn-welcome-alt { background: transparent; color: var(--danger); border: 2px solid #fecdd3; padding: 12px; border-radius: 10px; width: 100%; margin-top: 8px; font-weight: 600; }
-
-    /* TOAST */
-    #toastNotification {
-      position: fixed; top: 20px; left: 50%; transform: translate(-50%, -100px);
-      background: #333; color: white; padding: 12px 24px; border-radius: 50px;
-      font-size: 0.9rem; z-index: 3000; opacity: 0; transition: all 0.4s;
-    }
-    #toastNotification.show { transform: translate(-50%, 10px); opacity: 1; }
+    #toastNotification { position: fixed; top: 80px; left: 50%; transform: translate(-50%, -100px); background: #333; color: white; padding: 12px 24px; border-radius: 50px; font-size: 0.9rem; z-index: 3000; opacity: 0; transition: all 0.4s; }
+    #toastNotification.show { transform: translate(-50%, 0); opacity: 1; }
+    
+    #toTopBtn { position: fixed; bottom: 40px; right: 25px; width: 40px; height: 40px; background: white; color: var(--primary); border: 1px solid #e5e7eb; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 940; display: none; }
 
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo-container">
-      <img src="mlu-logo.png" alt="MLU" id="mluLogo" onerror="this.style.display='none'">
+    <div class="header-top">
+      <div class="logo-container" style="display: flex; align-items: center;">
+        <img src="mlu-logo.png" alt="MLU" id="mluLogo" onerror="this.style.display='none'; document.querySelector('header h1').style.marginLeft='0';">
+        <h1>Lokasi FC</h1>
+      </div>
+      <button id="helpBtnHeader">🆘 Bantuan</button>
     </div>
-    <h1>Lokasi Fast Charging</h1>
-    <button id="helpBtnHeader">🆘 Bantuan</button>
-
     <button class="find-btn" id="manualFindBtn">📍 Temukan Lokasi Terdekat</button>
   </header>
   
   <div class="search-container">
-      <input type="text" id="searchBox" placeholder="🔍 Cari lokasi, 'Gratis', '24 jam'..." />
+      <input type="text" id="searchBox" placeholder="🔍 Cari lokasi..." />
   </div>
 
   <main class="list-container">
     </main>
 
-  <button id="floatingSosBtn" title="Bantuan Darurat">🆘</button>
-  
+  <button id="floatingSosBtn">🆘</button>
   <button id="toTopBtn">⬆️</button>
 
   <footer>
     <div>
+      <p class="footer-intro">Created by :</p>
       <p class="footer-title">MLU Squad © 2025</p>
       <p class="footer-subtitle">Maka Lintas Utara</p>
     </div>
@@ -300,6 +303,7 @@
   <div id="toastNotification"></div>
 
   <script>
+    // DATA LOKASI
     const chargers = [
       { name: "Kelapa Gading", lat: -6.171583, lng: 106.899884, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Radio Dalam", lat: -6.257621, lng: 106.802051, link: "https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
@@ -307,24 +311,22 @@
       { name: "Gading Serpong", lat: -6.246792, lng: 106.629594, link: "https://maps.app.goo.gl/j5oeATswU7J9e9jj7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir Berbayar)" },
       { name: "Depok", lat: -6.402484, lng: 106.794240, link: "https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Marbella Kemang", lat: -6.260627, lng: 106.813746, link: "https://maps.app.goo.gl/wwzT9iLS34WFRgyi9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir berbayar)" },
-      { name: "Starvo PIK", lat: -6.124106, lng: 106.739785, link: "https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7", type: "Medium", nozzles: 2, hours: "Senin–Jumat 08.00–19.00", cost: 'Berbayar (via Starvo App)' },
-      { name: "Starvo Kedoya", lat: -6.186334, lng: 106.766978, link: "https://maps.app.goo.gl/HSKbMPz5UrwW178V9", type: "Medium", nozzles: 1, hours: "09.00–17.00", cost: 'Berbayar (via Starvo App)' },
+      { name: "Starvo PIK", lat: -6.124106, lng: 106.739785, link: "https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7", type: "Medium", nozzles: 2, hours: "Senin–Jumat 08.00–19.00", cost: 'Berbayar (via Starvo)' },
+      { name: "Starvo Kedoya", lat: -6.186334, lng: 106.766978, link: "https://maps.app.goo.gl/HSKbMPz5UrwW178V9", type: "Medium", nozzles: 1, hours: "09.00–17.00", cost: 'Berbayar (via Starvo)' },
       { name: "Ciledug", lat: -6.207012, lng: 106.714569, link: "https://maps.app.goo.gl/DSJiJyAW1BvL2Gwm8", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: "Gratis" },
       { name: "Bintaro", lat: -6.276471, lng: 106.730544, link: "https://maps.app.goo.gl/yZNxoj2gyutxd4zJA", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: "Gratis" },
-      { name: "Motoriz Meruya", lat: -6.200132, lng: 106.737796, link: "https://maps.app.goo.gl/xLqKRsEZ9WpBpTjf9", type: "Fast", nozzles: 1, hours: "09.00–19.00", cost: "Rp. 5.000 / jam" },
-      { name: "Motoriz Kranggan", lat: -6.340640, lng: 106.943016, link: "https://maps.app.goo.gl/bA1248oJ5C8pUXhg9", type: "Fast", nozzles: 2, hours: "09.00–19.00", cost: 'Berbayar (via Casan.id)' },
+      { name: "Motoriz Meruya", lat: -6.200132, lng: 106.737796, link: "https://maps.app.goo.gl/xLqKRsEZ9WpBpTjf9", type: "Fast", nozzles: 1, hours: "09.00–19.00 WIB", cost: "Rp. 5.000 / jam" },
+      { name: "Motoriz Kranggan", lat: -6.340640, lng: 106.943016, link: "https://maps.app.goo.gl/bA1248oJ5C8pUXhg9", type: "Fast", nozzles: 2, hours: "09.00–19.00 WIB", cost: 'Berbayar (via Casan.id)' },
       { name: "Warung Bu Ratna Cirendeu", lat: -6.310043, lng: 106.758325, link: "https://maps.app.goo.gl/Eyi3nNZHNMU64iYY7", type: "Fast", nozzles: 2, hours: "06.00–23.59", cost: "1k per 10%" },
       { name: "Klinik Pratama Condet", lat: -6.273896, lng: 106.857598, link: "https://maps.app.goo.gl/hTwbD4wEKB8g5qnU8?g_st=ac", type: "Fast", nozzles: 2, hours: "07.00 - Malam", cost: 'Berbayar (via Casan.id)' },
       { name: "Mister Kong Steam Wash", lat: -6.350800, lng: 106.830000, link: "https://maps.app.goo.gl/n6nUVbQzWay6f2MG6", type: "Fast", nozzles: 2, hours: "10.00 - 22.00", cost: 'Berbayar (via Casan.id)' },
-      { name: "Hotel Kartika Chandra", lat: -6.227645, lng: 106.819109, link: "https://maps.app.goo.gl/osYqkiaaebUoauxq5", type: "Fast", nozzles: 5, hours: "24 jam", cost: 'Berbayar (via Starvo App)' },
+      { name: "Hotel Kartika Chandra", lat: -6.227645, lng: 106.819109, link: "https://maps.app.goo.gl/osYqkiaaebUoauxq5", type: "Fast", nozzles: 5, hours: "24 jam", cost: 'Berbayar (via Starvo)' },
       { name: "Suzuki Cengkareng", lat: -6.150602, lng: 106.727243, link: "https://maps.app.goo.gl/uy6GpcKEHUtQHoFz7?g_st", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
       { name: "Dem Pro Kalimalang", lat: -6.244279, lng: 106.902554, link: "https://maps.app.goo.gl/YaQDCmQ2R5u1d4SP8", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
       { name: "Trans go Matraman", lat: -6.208155, lng: 106.874669, link: "https://maps.app.goo.gl/dZD5YVGP7NHFJ8bKA", type: "Fast", nozzles: "2", hours: "24 jam", cost: 'Berbayar (via Casan.id)', cp: "6285697279354" },
       { name: "Motoriz Sukapura", lat: -6.139714, lng: 106.922504, link: "https://maps.app.goo.gl/eePUBDDHDBXboHq4A?g_st=ipc", type: "Fast", nozzles: 2, hours: "24 jam", cost: 'Berbayar (via Casan.id)' },
       { name: "Bengkel Bubut Kemayoran", lat: -6.171770, lang: 106.856194,  link: "https://maps.app.goo.gl/ytu5Szsaq5nZGyFR8", type: "Fast", nozzles: 1, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
     ];
-
-    let currentList = [...chargers];
 
     function showToast(message) {
       const toast = document.getElementById('toastNotification');
@@ -353,7 +355,11 @@
         card.style.animationDelay = (index * 50) + 'ms'; 
         
         const reportLink = `https://wa.me/6287722285445?text=${encodeURIComponent(`Lapor: ${charger.name} bermasalah.`)}`;
-        let cpBtn = charger.cp ? `<a href="https://wa.me/${charger.cp}" target="_blank" class="cp-btn">📞 CP</a>` : '';
+        // CP Button Logic
+        let cpBtnHTML = '';
+        if (charger.cp) {
+            cpBtnHTML = `<a href="https://wa.me/${charger.cp}" target="_blank" class="cp-btn">📞 Hubungi CP</a>`;
+        }
 
         card.innerHTML = `
           <summary>
@@ -369,7 +375,7 @@
             <div class="card-actions">
               <a href="${charger.link}" target="_blank" class="nav-link">📍 Navigasi</a>
               <a href="${reportLink}" target="_blank" class="report-btn">⚠️ Lapor</a>
-              ${cpBtn}
+              ${cpBtnHTML}
             </div>
           </div>
         `;
@@ -383,11 +389,9 @@
       const floatingSosBtn = document.getElementById('floatingSosBtn');
       const toTopBtn = document.getElementById('toTopBtn');
       
-      // SCROLL LOGIC untuk Mengubah Tombol
+      // SCROLL LOGIC
       window.addEventListener('scroll', () => {
         const scrollY = window.scrollY || document.documentElement.scrollTop;
-        
-        // Jika scroll lebih dari 100px, munculkan tombol SOS Merah
         if (scrollY > 100) {
           floatingSosBtn.classList.add('show');
           toTopBtn.style.display = 'block';
@@ -397,63 +401,43 @@
         }
       });
 
-      // Logic Buka Panel Bantuan
-      const openHelp = () => {
-        helpPanel.style.right = '0px';
-        helpPanel.setAttribute('aria-hidden', 'false');
-      };
-      const closeHelp = () => {
-        helpPanel.style.right = '-340px';
-      };
+      const openHelp = () => { helpPanel.style.right = '0px'; helpPanel.setAttribute('aria-hidden', 'false'); };
+      const closeHelp = () => { helpPanel.style.right = '-340px'; };
 
       document.getElementById('helpBtnHeader').addEventListener('click', openHelp);
       floatingSosBtn.addEventListener('click', openHelp);
       document.getElementById('closeHelp').addEventListener('click', closeHelp);
-      document.getElementById('welcomeSOS').addEventListener('click', ()=>{
-        document.getElementById('welcomeOverlay').style.display='none';
-        openHelp();
-      });
+      document.getElementById('welcomeSOS').addEventListener('click', ()=>{ document.getElementById('welcomeOverlay').style.display='none'; openHelp(); });
 
-      // Logic Cari Lokasi
       findBtn.addEventListener('click', () => {
         if(!navigator.geolocation) return showToast("GPS tidak didukung");
-        findBtn.classList.add('loading'); findBtn.innerHTML = '⏳ Mencari...';
-        
+        findBtn.innerHTML = '⏳ Mencari...';
         navigator.geolocation.getCurrentPosition(pos => {
           const {latitude: lat, longitude: lng} = pos.coords;
           chargers.forEach(c => c.distance = getDistance(lat, lng, c.lat, c.lng));
           chargers.sort((a, b) => a.distance - b.distance);
           renderCards([...chargers]);
-          findBtn.classList.remove('loading'); findBtn.innerHTML = '✅ Lokasi Terdekat';
-          
-          // Auto scroll sedikit ke bawah agar header tidak mengganggu pandangan pertama
+          findBtn.innerHTML = '✅ Lokasi Terdekat';
           setTimeout(() => { 
-             document.querySelector('.list-container').scrollIntoView({behavior: 'smooth', block: 'start'});
-             // Buka kartu pertama
              const first = document.querySelector('details');
-             if(first) first.open = true;
+             if(first) {
+                 first.open = true;
+                 window.scrollTo({top: first.offsetTop - 140, behavior: 'smooth'});
+             }
           }, 300);
-        }, () => {
-            findBtn.classList.remove('loading'); findBtn.innerHTML = '📍 Temukan Lokasi';
-            showToast("Gagal ambil lokasi. Cek GPS.");
-        });
+        }, () => { findBtn.innerHTML = '📍 Temukan Lokasi'; showToast("Gagal ambil lokasi. Cek GPS."); });
       });
 
-      // Search Filter
       document.getElementById('searchBox').addEventListener('input', (e)=>{
         const q = e.target.value.toLowerCase();
         const filtered = chargers.filter(c => (c.name+c.cost).toLowerCase().includes(q));
         renderCards(filtered);
       });
 
-      // Welcome
-      document.getElementById('welcomeFind').addEventListener('click', ()=>{
-        document.getElementById('welcomeOverlay').style.display='none';
-        findBtn.click();
-      });
-      if(!localStorage.getItem('mlu_v3')) document.getElementById('welcomeOverlay').style.display='flex';
-      localStorage.setItem('mlu_v3','1');
-
+      document.getElementById('welcomeFind').addEventListener('click', ()=>{ document.getElementById('welcomeOverlay').style.display='none'; findBtn.click(); });
+      if(!localStorage.getItem('mlu_v4')) document.getElementById('welcomeOverlay').style.display='flex';
+      localStorage.setItem('mlu_v4','1');
+      
       toTopBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
       renderCards(chargers);
