@@ -39,7 +39,6 @@
       color: var(--text-main);
       transition: background 0.3s, color 0.3s;
       text-align: center;
-      /* PERBAIKAN 3: Padding bawah diperbesar agar list tidak ketutup tombol SOS */
       padding-bottom: 160px; 
     }
     
@@ -92,7 +91,7 @@
     .filter-scroll {
       display: flex; gap: 10px; padding: 0 20px; margin: 15px 0;
       overflow-x: auto; scrollbar-width: none;
-      justify-content: center; /* Tengahkan chip */
+      justify-content: center; 
     }
     .filter-chip {
       padding: 8px 18px; border-radius: 20px; border: 1px solid var(--text-sec);
@@ -168,6 +167,27 @@
     #welcomeOverlay{ position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 2000; }
     #welcomeBox{ background: var(--card-bg); padding: 30px; border-radius: 24px; width: 85%; max-width: 350px; text-align: center; color: var(--text-main); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
 
+    /* CSS MODAL ARTIKEL */
+    #articleOverlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2500;
+      display: none; align-items: flex-end; justify-content: center; backdrop-filter: blur(3px);
+      animation: fadeIn 0.3s;
+    }
+    .article-box {
+      background: var(--card-bg); width: 100%; max-width: 600px; height: 85%;
+      border-top-left-radius: 24px; border-top-right-radius: 24px;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+      display: flex; flex-direction: column;
+      animation: slideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .article-header { padding: 20px; border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+    .article-header h3 { margin: 0; color: var(--primary); }
+    #closeArticle { background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-sec); }
+    .article-content { padding: 20px; overflow-y: auto; color: var(--text-main); text-align: left; line-height: 1.6; }
+    .article-content h4 { margin-top: 0; color: var(--accent); }
+    @media(min-width: 600px){ #articleOverlay { align-items: center; } .article-box { height: auto; max-height: 80%; border-radius: 24px; } }
+
   </style>
 </head>
 <body>
@@ -179,6 +199,7 @@
         <h1>Lokasi Fast Charging<br><span style="font-size:0.7em; font-weight:400; color:var(--text-sec)">MAKA</span></h1>
       </div>
       <div class="header-actions">
+        <button class="icon-btn" id="articleBtn" title="Baca Artikel">📰</button>
         <button class="icon-btn" id="themeToggle" title="Ganti Tema">🌙</button>
         <button class="icon-btn" id="helpBtnHeader" title="Bantuan">🆘</button>
       </div>
@@ -206,7 +227,7 @@
   <footer>
     <div>
       <p class="footer-text" style="font-weight:600; color:var(--primary);">Created by MLU Squad © 2025</p>
-      <p class="footer-text">👤 <span id="visitorCount">...</span> Real Users</p>
+
     </div>
   </footer>
 
@@ -220,7 +241,12 @@
       <a href="https://wa.me/6282310253644">🥷 Ilham (Ketum MLU)</a>
       <a href="https://wa.me/6283179721893">🚨 Ogi (URC)</a>
     </div>
-    <button id="closeHelp" style="margin-top:20px; width:100%; padding:10px; border:none; background:var(--bg-body); color:var(--text-main); border-radius:8px; cursor:pointer;">Tutup</button>
+    <button id="closeHelp" style="margin-top:20px; width:100%; padding:10px; border:none; background:var(--bg-body); color:var(--text-main); border-radius:8px; cursor:pointer; font-weight:600;">Tutup</button>
+    
+    <div style="margin-top: 25px; text-align: center; color: var(--text-sec); font-size: 0.8rem; opacity: 0.8;">
+      <p style="margin: 5px 0;">Tetap hati-hati di jalan! 🏍️</p>
+      <p style="margin: 0; font-size: 0.75rem;">Salam Satu Aspal - MLU Squad</p>
+    </div>
   </div>
 
   <div id="welcomeOverlay" style="display:none;">
@@ -232,38 +258,73 @@
     </div>
   </div>
 
+  <div id="articleOverlay">
+    <div class="article-box">
+      <div class="article-header">
+        <h3>Info & Tips</h3>
+        <button id="closeArticle">✕</button>
+      </div>
+      <div class="article-content">
+        <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=600&q=80" alt="EV" style="width:100%; border-radius:12px; margin-bottom:15px;">
+        
+        <h4>Tips Baterai Awet 🔋</h4>
+        <p>1. Usahakan cas saat baterai sisa 20-30%. Hindari sampai 0%.</p>
+        <p>2. Jangan langsung cas saat motor habis dipakai jarak jauh (panas). Tunggu 15 menit.</p>
+        
+        <hr style="border:0; border-top:1px solid var(--text-sec); opacity:0.2; margin:20px 0;">
+        
+        <h4>Etika di SPKLU ⚡</h4>
+        <p>1. Cabut segera setelah penuh agar teman lain bisa pakai.</p>
+        <p>2. Rapikan kabel ke tempat semula.</p>
+        
+        <div style="height: 50px;"></div>
+      </div>
+    </div>
+  </div>
+
   <div id="toastNotification"></div>
 
   <script>
-    // DATA LOKASI
+    // DATA LOKASI (SUDAH DIKELOMPOKKAN DENGAN KOTA)
     const chargers = [
-      { name: "Kelapa Gading", lat: -6.171583, lng: 106.899884, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
-      { name: "Radio Dalam", lat: -6.262336, lng: 106.7888838, link: "https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
-      
-      // PERBAIKAN 2: KOORDINAT BEKASI DIPERBAIKI (Dulu 106.01 [Banten] -> Jadi 106.99 [Bekasi Kota])
-      { name: "Bekasi", lat: -6.223380, lng: 107.010880, link: "https://maps.app.goo.gl/4fdRXFebJHJW63Dg7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir Berbayar)" },
-      
-      { name: "Gading Serpong", lat: -6.246792, lng: 106.629594, link: "https://maps.app.goo.gl/j5oeATswU7J9e9jj7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir Berbayar)" },
-      { name: "Depok", lat: -6.402484, lng: 106.794240, link: "https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
-      { name: "Marbella Kemang", lat: -6.260627, lng: 106.813746, link: "https://maps.app.goo.gl/wwzT9iLS34WFRgyi9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir berbayar)" },
-      { name: "Starvo PIK", lat: -6.124106, lng: 106.739785, link: "https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7", type: "Maka+", nozzles: 1, hours: "Senin–Jumat 08.00–19.00", cost: 'Menggunakan Maka+ tukar KTP (berbayar via Starvo)' },
-      { name: "Starvo Kedoya", lat: -6.186334, lng: 106.766978, link: "https://maps.app.goo.gl/HSKbMPz5UrwW178V9", type: "Medium", nozzles: 1, hours: "09.00–17.00", cost: 'Berbayar (via Starvo)' },
-      { name: "Ciledug", lat: -6.207012, lng: 106.714569, link: "https://maps.app.goo.gl/DSJiJyAW1BvL2Gwm8", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: "Gratis" },
-      { name: "Bintaro", lat: -6.274624, lng: 106.745262, link: "https://maps.app.goo.gl/yZNxoj2gyutxd4zJA", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: "Gratis" },
-      { name: "Motoriz Meruya", lat: -6.200132, lng: 106.737796, link: "https://maps.app.goo.gl/xLqKRsEZ9WpBpTjf9", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
-      { name: "Motoriz Kranggan", lat: -6.340640, lng: 106.943016, link: "https://maps.app.goo.gl/bA1248oJ5C8pUXhg9", type: "Fast", nozzles: 2, hours: "09.00–19.00 WIB", cost: 'Berbayar (via Casan.id)' },
-      { name: "Warung Bu Ratna Cirendeu", lat: -6.310043, lng: 106.758325, link: "https://maps.app.goo.gl/Eyi3nNZHNMU64iYY7", type: "Fast", nozzles: 2, hours: "06.00–23.59", cost: 'Berbayar (via Casan.id)' },
-      { name: "Klinik Pratama Condet", lat: -6.273896, lng: 106.857598, link: "https://maps.app.goo.gl/hTwbD4wEKB8g5qnU8?g_st=ac", type: "Fast", nozzles: 2, hours: "07.00 - 23.30", cost: 'Berbayar (via Casan.id)' },
-      { name: "Mister Kong Steam Wash", lat: -6.350800, lng: 106.830000, link: "https://maps.app.goo.gl/n6nUVbQzWay6f2MG6", type: "Fast", nozzles: 2, hours: "10.00 - 22.00", cost: 'Berbayar (via Casan.id)' },
-      { name: "Hotel Kartika Chandra", lat: -6.227645, lng: 106.819109, link: "https://maps.app.goo.gl/osYqkiaaebUoauxq5", type: "Fast", nozzles: 5, hours: "24 jam", cost: 'Berbayar (via Starvo)' },
-      { name: "Suzuki Cengkareng", lat: -6.150602, lng: 106.727243, link: "https://maps.app.goo.gl/uy6GpcKEHUtQHoFz7?g_st", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
-      { name: "Dem Pro Kalimalang", lat: -6.244279, lng: 106.902554, link: "https://maps.app.goo.gl/YaQDCmQ2R5u1d4SP8", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
-      { name: "Trans go Matraman", lat: -6.208155, lng: 106.874669, link: "https://maps.app.goo.gl/dZD5YVGP7NHFJ8bKA", type: "Fast", nozzles: "2", hours: "08.00 - 23.00", cost: 'Berbayar (via Casan.id)', cp: "6285697279354" },
-      { name: "Motoriz Sukapura", lat: -6.139714, lng: 106.922504, link: "https://maps.app.goo.gl/eePUBDDHDBXboHq4A?g_st=ipc", type: "Fast", nozzles: 2, hours: "24 jam", cost: 'Berbayar (via Casan.id)' },
-      { name: "Bengkel Bubut Kemayoran", lat: -6.171770, lng: 106.853500,  link: "https://maps.app.goo.gl/ytu5Szsaq5nZGyFR8", type: "Fast", nozzles: 1, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
-      { name: "Smoot Gerbang Karawaci", lat: -6.214180, lng: 106.601771,  link: "https://maps.app.goo.gl/PShi9wbBT3uGycso7", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id) (Sementara masih gratis)' },
-      { name: "Suzuki Cibinong", lat: -6.482552, lng: 106.807999,  link: "https://maps.app.goo.gl/CQGqvNwHixXHqmma7", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id) (Sementara masih gratis)' },
-      
+      // JAKARTA UTARA
+      { name: "Kelapa Gading", city: "Jakarta Utara", lat: -6.171583, lng: 106.899884, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
+      { name: "Starvo PIK", city: "Jakarta Utara", lat: -6.124106, lng: 106.739785, link: "https://maps.app.goo.gl/6c5mKecEKvGqjv3Y7", type: "Maka+", nozzles: 1, hours: "Senin–Jumat 08.00–19.00", cost: 'Menggunakan Maka+ tukar KTP (berbayar via Starvo)' },
+      { name: "Motoriz Sukapura", city: "Jakarta Utara", lat: -6.139714, lng: 106.922504, link: "https://maps.app.goo.gl/eePUBDDHDBXboHq4A?g_st=ipc", type: "Fast", nozzles: 2, hours: "24 jam", cost: 'Berbayar (via Casan.id)' },
+
+      // JAKARTA PUSAT
+      { name: "Hotel Kartika Chandra", city: "Jakarta Pusat", lat: -6.227645, lng: 106.819109, link: "https://maps.app.goo.gl/osYqkiaaebUoauxq5", type: "Fast", nozzles: 5, hours: "24 jam", cost: 'Berbayar (via Starvo)' },
+      { name: "Bengkel Bubut Kemayoran", city: "Jakarta Pusat", lat: -6.171770, lng: 106.853500,  link: "https://maps.app.goo.gl/ytu5Szsaq5nZGyFR8", type: "Fast", nozzles: 1, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
+
+      // JAKARTA TIMUR
+      { name: "Dem Pro Kalimalang", city: "Jakarta Timur", lat: -6.244279, lng: 106.902554, link: "https://maps.app.goo.gl/YaQDCmQ2R5u1d4SP8", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
+      { name: "Trans go Matraman", city: "Jakarta Timur", lat: -6.208155, lng: 106.874669, link: "https://maps.app.goo.gl/dZD5YVGP7NHFJ8bKA", type: "Fast", nozzles: "2", hours: "08.00 - 23.00", cost: 'Berbayar (via Casan.id)', cp: "6285697279354" },
+      { name: "Klinik Pratama Condet", city: "Jakarta Timur", lat: -6.273896, lng: 106.857598, link: "https://maps.app.goo.gl/hTwbD4wEKB8g5qnU8?g_st=ac", type: "Fast", nozzles: 2, hours: "07.00 - 23.30", cost: 'Berbayar (via Casan.id)' },
+
+      // JAKARTA SELATAN
+      { name: "Radio Dalam", city: "Jakarta Selatan", lat: -6.262336, lng: 106.7888838, link: "https://maps.app.goo.gl/VULRCigqJ4iM8SSZ6", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
+      { name: "Marbella Kemang", city: "Jakarta Selatan", lat: -6.260627, lng: 106.813746, link: "https://maps.app.goo.gl/wwzT9iLS34WFRgyi9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir berbayar)" },
+      { name: "Mister Kong Steam Wash", city: "Jakarta Selatan", lat: -6.350800, lng: 106.830000, link: "https://maps.app.goo.gl/n6nUVbQzWay6f2MG6", type: "Fast", nozzles: 2, hours: "10.00 - 22.00", cost: 'Berbayar (via Casan.id)' },
+      { name: "Warung Bu Ratna Cirendeu", city: "Jakarta Selatan", lat: -6.310043, lng: 106.758325, link: "https://maps.app.goo.gl/Eyi3nNZHNMU64iYY7", type: "Fast", nozzles: 2, hours: "06.00–23.59", cost: 'Berbayar (via Casan.id)' },
+
+      // JAKARTA BARAT
+      { name: "Starvo Kedoya", city: "Jakarta Barat", lat: -6.186334, lng: 106.766978, link: "https://maps.app.goo.gl/HSKbMPz5UrwW178V9", type: "Medium", nozzles: 1, hours: "09.00–17.00", cost: 'Berbayar (via Starvo)' },
+      { name: "Motoriz Meruya", city: "Jakarta Barat", lat: -6.200132, lng: 106.737796, link: "https://maps.app.goo.gl/xLqKRsEZ9WpBpTjf9", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
+      { name: "Suzuki Cengkareng", city: "Jakarta Barat", lat: -6.150602, lng: 106.727243, link: "https://maps.app.goo.gl/uy6GpcKEHUtQHoFz7?g_st", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
+
+      // TANGERANG & BINTARO
+      { name: "Gading Serpong", city: "Tangerang", lat: -6.246792, lng: 106.629594, link: "https://maps.app.goo.gl/j5oeATswU7J9e9jj7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir Berbayar)" },
+      { name: "Smoot Gerbang Karawaci", city: "Tangerang", lat: -6.214180, lng: 106.601771,  link: "https://maps.app.goo.gl/PShi9wbBT3uGycso7", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
+      { name: "Ciledug", city: "Tangerang", lat: -6.207012, lng: 106.714569, link: "https://maps.app.goo.gl/DSJiJyAW1BvL2Gwm8", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: "Gratis" },
+      { name: "Bintaro", city: "Tangerang Selatan", lat: -6.274624, lng: 106.745262, link: "https://maps.app.goo.gl/yZNxoj2gyutxd4zJA", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: "Gratis" },
+
+      // BEKASI
+      { name: "Bekasi", city: "Bekasi", lat: -6.223380, lng: 107.010880, link: "https://maps.app.goo.gl/4fdRXFebJHJW63Dg7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis (Parkir Berbayar)" },
+      { name: "Motoriz Kranggan", city: "Bekasi", lat: -6.340640, lng: 106.943016, link: "https://maps.app.goo.gl/bA1248oJ5C8pUXhg9", type: "Fast", nozzles: 2, hours: "09.00–19.00 WIB", cost: 'Berbayar (via Casan.id)' },
+
+      // DEPOK & BOGOR
+      { name: "Depok", city: "Depok", lat: -6.402484, lng: 106.794240, link: "https://maps.app.goo.gl/FYH2yXqo1Mgipz6R7", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
+      { name: "Suzuki Cibinong", city: "Bogor", lat: -6.482552, lng: 106.807999,  link: "https://maps.app.goo.gl/CQGqvNwHixXHqmma7", type: "Fast", nozzles: 2, hours: "24 jam 7/7", cost: 'Berbayar (via Casan.id)' },
     ];
 
     let currentFilter = 'all';
@@ -311,80 +372,79 @@
     // --- LOGIKA FILTER TOGGLE ---
     function toggleFilter(category, element) {
         const isActive = element.classList.contains('active');
-        
-        // Reset semua filter visual
         document.querySelectorAll('.filter-chip').forEach(el => el.classList.remove('active'));
-
-        if (isActive) {
-            // Jika diklik saat aktif -> Matikan filter (Show All)
-            currentFilter = 'all';
-        } else {
-            // Jika belum aktif -> Aktifkan filter ini
-            element.classList.add('active');
-            currentFilter = category;
-        }
-        
+        if (isActive) { currentFilter = 'all'; } else { element.classList.add('active'); currentFilter = category; }
         applyFilter();
     }
 
     function applyFilter() {
         let filteredList = chargers;
-
-        if (currentFilter === 'gratis') {
-            filteredList = chargers.filter(c => c.cost.toLowerCase().includes('gratis'));
-        } else if (currentFilter === '24jam') {
-            filteredList = chargers.filter(c => c.hours.toLowerCase().includes('24 jam'));
-        } else if (currentFilter === 'fast') {
-            filteredList = chargers.filter(c => c.type.toLowerCase().includes('fast'));
-        }
-
-        // Sort ulang jika user location ada
+        if (currentFilter === 'gratis') filteredList = chargers.filter(c => c.cost.toLowerCase().includes('gratis'));
+        else if (currentFilter === '24jam') filteredList = chargers.filter(c => c.hours.toLowerCase().includes('24 jam'));
+        else if (currentFilter === 'fast') filteredList = chargers.filter(c => c.type.toLowerCase().includes('fast'));
+        
         if(userLat && userLng) {
             filteredList.sort((a, b) => (a.distance || 9999) - (b.distance || 9999));
         }
-
         renderCards(filteredList);
     }
 
     function renderCards(list) {
       const container = document.querySelector('.list-container');
       container.innerHTML = '';
+
       if (list.length === 0) {
           container.innerHTML = '<div style="padding:40px; opacity:0.6;">Tidak ada lokasi yang cocok.</div>';
           return;
       }
-      
-      list.forEach((charger, index) => {
-        const card = document.createElement('details');
-        card.className = 'card';
-        card.style.animationDelay = (index * 50) + 'ms'; 
-        
-        const statusClass = getStatusColor(charger.hours);
-        const statusLabel = getStatusText(statusClass);
 
-        const reportLink = `https://wa.me/6287722285445?text=${encodeURIComponent(`Lapor: ${charger.name} bermasalah.`)}`;
-        let cpBtnHTML = charger.cp ? `<a href="https://wa.me/${charger.cp}" target="_blank" class="cp-btn">📞 Hubungi</a>` : '';
+      // --- LOGIKA PENGELOMPOKAN KOTA (CITY GROUPING) ---
+      const grouped = {};
+      list.forEach(item => {
+        const city = item.city || 'Lainnya';
+        if (!grouped[city]) grouped[city] = [];
+        grouped[city].push(item);
+      });
 
-        card.innerHTML = `
-          <summary>
-            <div style="display:flex; align-items:center; width:100%;">
-                <span class="status-dot ${statusClass}" title="${statusLabel}"></span>
-                <span style="flex-grow:1; text-align:left;">${charger.name}</span>
-                ${charger.distance ? `<span class="card-distance">${charger.distance.toFixed(1)} km</span>` : ''}
-            </div>
-          </summary>
-          <div class="card-content">
-            <p>⚡ <strong>${charger.type}</strong> (${charger.nozzles} nozzle)</p>
-            <p>⏰ ${charger.hours}</p>
-            <p>💵 ${charger.cost}</p>
-            <div class="card-actions">
-              <a href="${charger.link}" target="_blank" class="nav-link">📍 Navigasi</a>
-              <a href="${reportLink}" target="_blank" class="report-btn">⚠️ Lapor</a>
-              ${cpBtnHTML}
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
+      Object.keys(grouped).forEach(city => {
+        // Buat Header Kota
+        const cityHeader = document.createElement('div');
+        cityHeader.style.cssText = "text-align:left; margin: 20px 0 10px 5px; font-weight:700; color:var(--text-sec); font-size:0.9rem; text-transform:uppercase; letter-spacing:1px; border-left: 3px solid var(--primary); padding-left: 10px;";
+        cityHeader.textContent = city;
+        container.appendChild(cityHeader);
+
+        // Render Kartu
+        grouped[city].forEach((charger, index) => {
+            const card = document.createElement('details');
+            card.className = 'card';
+            card.style.animationDelay = (index * 30) + 'ms'; 
+            
+            const statusClass = getStatusColor(charger.hours);
+            const statusLabel = getStatusText(statusClass);
+            const reportLink = `https://wa.me/6287722285445?text=${encodeURIComponent(`Lapor: ${charger.name} bermasalah.`)}`;
+            let cpBtnHTML = charger.cp ? `<a href="https://wa.me/${charger.cp}" target="_blank" class="cp-btn">📞 Hubungi</a>` : '';
+
+            card.innerHTML = `
+              <summary>
+                <div style="display:flex; align-items:center; width:100%;">
+                    <span class="status-dot ${statusClass}" title="${statusLabel}"></span>
+                    <span style="flex-grow:1; text-align:left;">${charger.name}</span>
+                    ${charger.distance ? `<span class="card-distance">${charger.distance.toFixed(1)} km</span>` : ''}
+                </div>
+              </summary>
+              <div class="card-content">
+                <p>⚡ <strong>${charger.type}</strong> (${charger.nozzles} nozzle)</p>
+                <p>⏰ ${charger.hours}</p>
+                <p>💵 ${charger.cost}</p>
+                <div class="card-actions">
+                  <a href="${charger.link}" target="_blank" class="nav-link">📍 Navigasi</a>
+                  <a href="${reportLink}" target="_blank" class="report-btn">⚠️ Lapor</a>
+                  ${cpBtnHTML}
+                </div>
+              </div>
+            `;
+            container.appendChild(card);
+        });
       });
     }
 
@@ -399,6 +459,14 @@
         document.body.classList.add('dark-mode');
         themeBtn.textContent = '☀️';
     }
+
+    // ARTIKEL LOGIC
+    const articleBtn = document.getElementById('articleBtn');
+    const articleOverlay = document.getElementById('articleOverlay');
+    const closeArticle = document.getElementById('closeArticle');
+    articleBtn.addEventListener('click', () => articleOverlay.style.display = 'flex');
+    closeArticle.addEventListener('click', () => articleOverlay.style.display = 'none');
+    articleOverlay.addEventListener('click', (e) => { if(e.target === articleOverlay) articleOverlay.style.display = 'none'; });
 
     async function updateCounter() {
         try {
