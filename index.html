@@ -18,6 +18,9 @@
       --success: #22c55e;
       --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
       --header-bg: rgba(255, 255, 255, 0.90);
+      /* Variabel Baru untuk Ticker Berita */
+      --ticker-bg: #fff7ed;
+      --ticker-text: #c2410c;
     }
 
     /* Dark Mode Variables */
@@ -28,6 +31,8 @@
       --text-sec: #94a3b8;
       --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
       --header-bg: rgba(15, 23, 42, 0.90);
+      --ticker-bg: #331800;
+      --ticker-text: #fdba74;
     }
 
     html { height: 100%; scroll-behavior: smooth; }
@@ -42,15 +47,19 @@
       padding-bottom: 160px; 
     }
     
-    /* HEADER STICKY */
+    /* HEADER STICKY UPDATE (Untuk Ticker) */
     header{
-      padding: 10px 20px;
+      padding: 0; /* Reset padding */
       background: var(--header-bg);
       backdrop-filter: blur(8px);
       position: sticky; top: 0; z-index: 1000;
       border-bottom: 1px solid rgba(0,0,0,0.05);
       display: flex; flex-direction: column; align-items: center;
       transition: background 0.3s;
+    }
+
+    .header-main-content {
+        width: 100%; padding: 10px 20px; box-sizing: border-box;
     }
     
     .header-row { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
@@ -70,11 +79,53 @@
     }
     .icon-btn:hover { background: var(--bg-body); transform: scale(1.05); }
 
+    /* CSS BREAKING NEWS TICKER */
+    .news-ticker {
+        width: 100%;
+        background: var(--ticker-bg);
+        color: var(--ticker-text);
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        height: 30px;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        cursor: pointer;
+    }
+    .ticker-label {
+        background: var(--danger);
+        color: white;
+        padding: 0 10px;
+        height: 100%;
+        display: flex; align-items: center;
+        font-weight: 700;
+        font-size: 0.75rem;
+        z-index: 2;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        white-space: nowrap;
+    }
+    .ticker-wrapper {
+        white-space: nowrap;
+        overflow: hidden;
+        flex-grow: 1;
+        position: relative;
+    }
+    .ticker-content {
+        display: inline-block;
+        padding-left: 100%;
+        animation: ticker 20s linear infinite;
+        font-weight: 500;
+    }
+    @keyframes ticker {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(-100%, 0); }
+    }
+
     #weatherWidget {
       display: none; align-items: center; justify-content: center; gap: 6px;
       background: linear-gradient(to right, #3b82f6, #06b6d4);
       color: white; padding: 6px 14px; border-radius: 20px; margin-bottom: 8px;
-      font-size: 0.8rem; font-weight: 600; width: fit-content;
+      font-size: 0.8rem; font-weight: 600; width: fit-content; margin-left: auto; margin-right: auto;
       animation: fadeIn 0.5s ease;
     }
 
@@ -193,20 +244,31 @@
 <body>
 
   <header>
-    <div class="header-row">
-      <div class="logo-area">
-        <img src="mlu-logo.png" alt="MLU" id="mluLogo" onerror="this.style.display='none';">
-        <h1>Lokasi Fast Charging<br><span style="font-size:0.7em; font-weight:400; color:var(--text-sec)">MAKA</span></h1>
-      </div>
-      <div class="header-actions">
-        <button class="icon-btn" id="articleBtn" title="Baca Artikel">📰</button>
-        <button class="icon-btn" id="themeToggle" title="Ganti Tema">🌙</button>
-        <button class="icon-btn" id="helpBtnHeader" title="Bantuan">🆘</button>
-      </div>
+    <div class="header-main-content">
+        <div class="header-row">
+          <div class="logo-area">
+            <img src="mlu-logo.png" alt="MLU" id="mluLogo" onerror="this.style.display='none';">
+            <h1>Lokasi Fast Charging<br><span style="font-size:0.7em; font-weight:400; color:var(--text-sec)">MAKA</span></h1>
+          </div>
+          <div class="header-actions">
+            <button class="icon-btn" id="articleBtn" title="Baca Artikel">📰</button>
+            <button class="icon-btn" id="themeToggle" title="Ganti Tema">🌙</button>
+            <button class="icon-btn" id="helpBtnHeader" title="Bantuan">🆘</button>
+          </div>
+        </div>
+        
+        <div id="weatherWidget">Loading...</div>
+        <button class="find-btn" id="manualFindBtn">📍 Temukan Lokasi Terdekat</button>
     </div>
-    
-    <div id="weatherWidget">Loading...</div>
-    <button class="find-btn" id="manualFindBtn">📍 Temukan Lokasi Terdekat</button>
+
+    <div class="news-ticker" id="breakingNews">
+        <div class="ticker-label">📢 INFO MLU</div>
+        <div class="ticker-wrapper">
+            <div class="ticker-content">
+                Klik disini untuk info Kopdar MLU Goes to Puncak!     •     Tata Tertib Showroom Kelapa Gading     •   
+            </div>
+        </div>
+    </div>
   </header>
 
   <div class="filter-scroll">
@@ -227,7 +289,6 @@
   <footer>
     <div>
       <p class="footer-text" style="font-weight:600; color:var(--primary);">Created by MLU Squad © 2025</p>
-
     </div>
   </footer>
 
@@ -462,25 +523,21 @@
         themeBtn.textContent = '☀️';
     }
 
-    // ARTIKEL LOGIC
+    // ARTIKEL & TICKER LOGIC
     const articleBtn = document.getElementById('articleBtn');
+    const breakingNews = document.getElementById('breakingNews');
     const articleOverlay = document.getElementById('articleOverlay');
     const closeArticle = document.getElementById('closeArticle');
-    articleBtn.addEventListener('click', () => articleOverlay.style.display = 'flex');
-    closeArticle.addEventListener('click', () => articleOverlay.style.display = 'none');
-    articleOverlay.addEventListener('click', (e) => { if(e.target === articleOverlay) articleOverlay.style.display = 'none'; });
+    
+    const openArticle = () => articleOverlay.style.display = 'flex';
+    const closeArticleFunc = () => articleOverlay.style.display = 'none';
 
-    async function updateCounter() {
-        try {
-            const el = document.getElementById('visitorCount');
-            const res = await fetch(`https://api.countapi.xyz/hit/mlu-squad-v4/visits`);
-            const data = await res.json();
-            el.textContent = data.value || "1";
-        } catch(e) { document.getElementById('visitorCount').textContent = "—"; }
-    }
+    articleBtn.addEventListener('click', openArticle);
+    breakingNews.addEventListener('click', openArticle);
+    closeArticle.addEventListener('click', closeArticleFunc);
+    articleOverlay.addEventListener('click', (e) => { if(e.target === articleOverlay) closeArticleFunc(); });
 
     document.addEventListener('DOMContentLoaded', ()=>{
-      updateCounter();
       const findBtn = document.getElementById('manualFindBtn');
       const helpPanel = document.getElementById('helpPanel');
       
