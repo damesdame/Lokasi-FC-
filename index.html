@@ -18,7 +18,6 @@
       --success: #22c55e;
       --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
       --header-bg: rgba(255, 255, 255, 0.90);
-      /* Variabel Baru untuk Ticker Berita */
       --ticker-bg: #fff7ed;
       --ticker-text: #c2410c;
     }
@@ -47,9 +46,9 @@
       padding-bottom: 160px; 
     }
     
-    /* HEADER STICKY UPDATE (Untuk Ticker) */
+    /* HEADER STICKY */
     header{
-      padding: 0; /* Reset padding */
+      padding: 0; 
       background: var(--header-bg);
       backdrop-filter: blur(8px);
       position: sticky; top: 0; z-index: 1000;
@@ -58,158 +57,58 @@
       transition: background 0.3s;
     }
 
-    .header-main-content {
-        width: 100%; padding: 10px 20px; box-sizing: border-box;
-    }
-    
+    .header-main-content { width: 100%; padding: 10px 20px; box-sizing: border-box; }
     .header-row { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .logo-area { display: flex; align-items: center; gap: 10px; }
     .logo-area img{ width: 70px; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
-    .logo-area h1{
-      margin: 0; font-size: 1.1rem; font-weight: 800;
-      background: -webkit-linear-gradient(45deg, var(--primary), var(--accent));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      text-align: left; line-height: 1.2;
-    }
-
+    .logo-area h1{ margin: 0; font-size: 1.1rem; font-weight: 800; background: -webkit-linear-gradient(45deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: left; line-height: 1.2; }
     .header-actions { display: flex; gap: 8px; }
-    .icon-btn {
-      background: transparent; border: 1px solid var(--text-sec); color: var(--text-main);
-      width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s;
-    }
+    .icon-btn { background: transparent; border: 1px solid var(--text-sec); color: var(--text-main); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s; }
     .icon-btn:hover { background: var(--bg-body); transform: scale(1.05); }
 
-    /* CSS BREAKING NEWS TICKER */
-    .news-ticker {
-        width: 100%;
-        background: var(--ticker-bg);
-        color: var(--ticker-text);
-        font-size: 0.85rem;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        height: 30px;
-        border-top: 1px solid rgba(0,0,0,0.05);
-        cursor: pointer;
-    }
-    .ticker-label {
-        background: var(--danger);
-        color: white;
-        padding: 0 10px;
-        height: 100%;
-        display: flex; align-items: center;
-        font-weight: 700;
-        font-size: 0.75rem;
-        z-index: 2;
-        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-        white-space: nowrap;
-    }
-    .ticker-wrapper {
-        white-space: nowrap;
-        overflow: hidden;
-        flex-grow: 1;
-        position: relative;
-    }
-    .ticker-content {
-        display: inline-block;
-        padding-left: 100%;
-        animation: ticker 20s linear infinite;
-        font-weight: 500;
-    }
-    @keyframes ticker {
-        0% { transform: translate(0, 0); }
-        100% { transform: translate(-100%, 0); }
-    }
+    /* NEWS TICKER */
+    .news-ticker { width: 100%; background: var(--ticker-bg); color: var(--ticker-text); font-size: 0.85rem; display: flex; align-items: center; overflow: hidden; height: 30px; border-top: 1px solid rgba(0,0,0,0.05); cursor: pointer; }
+    .ticker-label { background: var(--danger); color: white; padding: 0 10px; height: 100%; display: flex; align-items: center; font-weight: 700; font-size: 0.75rem; z-index: 2; box-shadow: 2px 0 5px rgba(0,0,0,0.1); white-space: nowrap; }
+    .ticker-wrapper { white-space: nowrap; overflow: hidden; flex-grow: 1; position: relative; }
+    .ticker-content { display: inline-block; padding-left: 100%; animation: ticker 20s linear infinite; font-weight: 500; }
+    @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-    #weatherWidget {
-      display: none; align-items: center; justify-content: center; gap: 6px;
-      background: linear-gradient(to right, #3b82f6, #06b6d4);
-      color: white; padding: 6px 14px; border-radius: 20px; margin-bottom: 8px;
-      font-size: 0.8rem; font-weight: 600; width: fit-content; margin-left: auto; margin-right: auto;
-      animation: fadeIn 0.5s ease;
-    }
+    #weatherWidget { display: none; align-items: center; justify-content: center; gap: 6px; background: linear-gradient(to right, #3b82f6, #06b6d4); color: white; padding: 6px 14px; border-radius: 20px; margin-bottom: 8px; font-size: 0.8rem; font-weight: 600; width: fit-content; margin-left: auto; margin-right: auto; animation: fadeIn 0.5s ease; }
 
-    .find-btn{
-      padding: 12px; width: 100%;
-      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
-      border: none; color: white; border-radius: 12px; cursor: pointer;
-      font-weight: 600; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
-      transition: transform 0.2s;
-    }
+    .find-btn{ padding: 12px; width: 100%; background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%); border: none; color: white; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); transition: transform 0.2s; }
     .find-btn:active{ transform: scale(0.98); }
 
-    /* FILTER CHIPS UPDATE */
-    .filter-scroll {
-      display: flex; gap: 10px; padding: 0 20px; margin: 15px 0;
-      overflow-x: auto; scrollbar-width: none;
-      justify-content: center; 
-    }
-    .filter-chip {
-      padding: 8px 18px; border-radius: 20px; border: 1px solid var(--text-sec);
-      background: var(--card-bg); color: var(--text-main); font-size: 0.85rem; font-weight: 500;
-      white-space: nowrap; cursor: pointer; transition: all 0.2s; opacity: 0.7;
-    }
-    .filter-chip.active {
-      background: var(--primary); color: white; border-color: var(--primary); 
-      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3); opacity: 1; font-weight: 600;
-    }
+    /* FILTERS */
+    .filter-scroll { display: flex; gap: 10px; padding: 0 20px; margin: 15px 0; overflow-x: auto; scrollbar-width: none; justify-content: center; }
+    .filter-chip { padding: 8px 18px; border-radius: 20px; border: 1px solid var(--text-sec); background: var(--card-bg); color: var(--text-main); font-size: 0.85rem; font-weight: 500; white-space: nowrap; cursor: pointer; transition: all 0.2s; opacity: 0.7; }
+    .filter-chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3); opacity: 1; font-weight: 600; }
 
+    /* CARDS */
     main.list-container{ display: flex; flex-direction: column; gap: 14px; padding: 0 20px; max-width: 800px; margin: 0 auto; }
-
-    .card{
-      background: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow);
-      text-align: left; border: 1px solid rgba(0,0,0,0.05); opacity: 0; animation: fadeInUp 0.5s ease forwards;
-      overflow: hidden; transition: background 0.3s;
-    }
+    .card{ background: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow); text-align: left; border: 1px solid rgba(0,0,0,0.05); opacity: 0; animation: fadeInUp 0.5s ease forwards; overflow: hidden; transition: background 0.3s; }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-    
-    .card summary {
-      padding: 18px 20px; font-weight: 700; font-size: 1rem; cursor: pointer;
-      list-style: none; display: flex; justify-content: space-between; align-items: center;
-      position: relative;
-    }
+    .card summary { padding: 18px 20px; font-weight: 700; font-size: 1rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; position: relative; }
     .card summary::-webkit-details-marker { display: none; }
-
-    .status-dot {
-      height: 10px; width: 10px; background-color: #ccc; border-radius: 50%; display: inline-block; margin-right: 10px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.2); flex-shrink: 0;
-    }
+    .status-dot { height: 10px; width: 10px; background-color: #ccc; border-radius: 50%; display: inline-block; margin-right: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.2); flex-shrink: 0; }
     .status-open { background-color: var(--success); box-shadow: 0 0 8px var(--success); }
     .status-closed { background-color: var(--danger); }
-
     .card-content { padding: 0 20px 20px 20px; border-top: 1px solid rgba(0,0,0,0.05); }
     .card-content p { margin: 8px 0; font-size: 0.9rem; color: var(--text-sec); display: flex; align-items: center; gap: 8px; }
-    
     .card-actions { margin-top: 15px; display: flex; gap: 8px; width: 100%; }
-    .nav-link, .report-btn, .cp-btn { 
-      flex: 1; padding: 12px 5px; border-radius: 10px; text-align: center; text-decoration: none; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; 
-    }
+    .nav-link, .report-btn, .cp-btn { flex: 1; padding: 12px 5px; border-radius: 10px; text-align: center; text-decoration: none; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
     .nav-link { background: var(--primary); color: white; }
     .report-btn { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
     .cp-btn { background: rgba(6, 182, 212, 0.1); color: var(--accent); border: 1px solid rgba(6, 182, 212, 0.3); }
 
-    #floatingSosBtn {
-      position: fixed; bottom: 90px; right: 20px; width: 55px; height: 55px;
-      background: var(--danger); color: white; border: none; border-radius: 50%; font-size: 1.5rem;
-      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5); z-index: 950; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; opacity: 0; pointer-events: none; transform: scale(0.5); transition: all 0.3s;
-      animation: pulse 2s infinite;
-    }
+    #floatingSosBtn { position: fixed; bottom: 90px; right: 20px; width: 55px; height: 55px; background: var(--danger); color: white; border: none; border-radius: 50%; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5); z-index: 950; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transform: scale(0.5); transition: all 0.3s; animation: pulse 2s infinite; }
     #floatingSosBtn.show { opacity: 1; pointer-events: auto; transform: scale(1); }
     @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
-
     #toTopBtn { position: fixed; bottom: 30px; right: 28px; width: 40px; height: 40px; background: var(--card-bg); color: var(--primary); border: 1px solid var(--text-sec); border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 940; display: none; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 
-    footer{
-      position: fixed; bottom: 0; left: 0; width: 100%; background: var(--card-bg); padding: 10px;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05); z-index: 900; border-top: 1px solid rgba(0,0,0,0.05);
-    }
+    footer{ position: fixed; bottom: 0; left: 0; width: 100%; background: var(--card-bg); padding: 10px; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); z-index: 900; border-top: 1px solid rgba(0,0,0,0.05); }
     .footer-text { font-size: 0.75rem; color: var(--text-sec); margin: 2px 0; }
 
-    #helpPanel{
-      position: fixed; top: 0; right: -340px; width: 280px; height: 100%;
-      background: var(--card-bg); box-shadow: -5px 0 30px rgba(0,0,0,0.2); padding: 25px; transition: right 0.3s ease; z-index: 1100; text-align: left; color: var(--text-main);
-    }
+    #helpPanel{ position: fixed; top: 0; right: -340px; width: 280px; height: 100%; background: var(--card-bg); box-shadow: -5px 0 30px rgba(0,0,0,0.2); padding: 25px; transition: right 0.3s ease; z-index: 1100; text-align: left; color: var(--text-main); }
     #helpPanel a { display: block; background: rgba(37, 99, 235, 0.1); color: var(--primary); padding: 12px; border-radius: 10px; margin-top: 8px; text-decoration: none; font-weight: 600; }
     
     #toastNotification { position: fixed; top: 90px; left: 50%; transform: translate(-50%, -100px); background: #333; color: white; padding: 12px 24px; border-radius: 50px; font-size: 0.9rem; z-index: 3000; opacity: 0; transition: all 0.4s; white-space: nowrap;}
@@ -219,18 +118,8 @@
     #welcomeBox{ background: var(--card-bg); padding: 30px; border-radius: 24px; width: 85%; max-width: 350px; text-align: center; color: var(--text-main); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
 
     /* CSS MODAL ARTIKEL */
-    #articleOverlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2500;
-      display: none; align-items: flex-end; justify-content: center; backdrop-filter: blur(3px);
-      animation: fadeIn 0.3s;
-    }
-    .article-box {
-      background: var(--card-bg); width: 100%; max-width: 600px; height: 85%;
-      border-top-left-radius: 24px; border-top-right-radius: 24px;
-      box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
-      display: flex; flex-direction: column;
-      animation: slideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
+    #articleOverlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2500; display: none; align-items: flex-end; justify-content: center; backdrop-filter: blur(3px); animation: fadeIn 0.3s; }
+    .article-box { background: var(--card-bg); width: 100%; max-width: 600px; height: 85%; border-top-left-radius: 24px; border-top-right-radius: 24px; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); display: flex; flex-direction: column; animation: slideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
     @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     .article-header { padding: 20px; border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
     .article-header h3 { margin: 0; color: var(--primary); }
@@ -238,6 +127,18 @@
     .article-content { padding: 20px; overflow-y: auto; color: var(--text-main); text-align: left; line-height: 1.6; }
     .article-content h4 { margin-top: 0; color: var(--accent); }
     @media(min-width: 600px){ #articleOverlay { align-items: center; } .article-box { height: auto; max-height: 80%; border-radius: 24px; } }
+
+    /* CSS SLIDESHOW (CAROUSEL) */
+    .slideshow-container { position: relative; max-width: 100%; margin: auto; border-radius: 12px; overflow: hidden;}
+    .mySlides { display: none; }
+    .prev, .next { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px; color: white; font-weight: bold; font-size: 18px; transition: 0.6s ease; border-radius: 0 3px 3px 0; user-select: none; background-color: rgba(0,0,0,0.3); }
+    .next { right: 0; border-radius: 3px 0 0 3px; }
+    .prev:hover, .next:hover { background-color: rgba(0,0,0,0.8); }
+    .numbertext { color: #f2f2f2; font-size: 12px; padding: 8px 12px; position: absolute; top: 0; text-shadow: 1px 1px 2px black; }
+    .dot { cursor: pointer; height: 10px; width: 10px; margin: 0 2px; background-color: #bbb; border-radius: 50%; display: inline-block; transition: background-color 0.6s ease; }
+    .active, .dot:hover { background-color: var(--primary); }
+    .fade { animation-name: fade; animation-duration: 1.5s; }
+    @keyframes fade { from {opacity: .4} to {opacity: 1} }
 
   </style>
 </head>
@@ -256,7 +157,6 @@
             <button class="icon-btn" id="helpBtnHeader" title="Bantuan">🆘</button>
           </div>
         </div>
-        
         <div id="weatherWidget">Loading...</div>
         <button class="find-btn" id="manualFindBtn">📍 Temukan Lokasi Terdekat</button>
     </div>
@@ -265,7 +165,7 @@
         <div class="ticker-label">📢 INFO MLU</div>
         <div class="ticker-wrapper">
             <div class="ticker-content">
-                Klik disini untuk info Kopdar MLU Goes to Puncak!     •     Tata Tertib Showroom Kelapa Gading     •   
+                Klik disini untuk info Kopdar MLU Goes to Puncak!     •     Tata Tertib Baru Showroom Kelapa Gading     •     Jangan lupa cabut charger jika sudah penuh!
             </div>
         </div>
     </div>
@@ -326,8 +226,29 @@
         <button id="closeArticle">✕</button>
       </div>
       <div class="article-content">
-        <img src="mlupuncak.jpg" alt="MLU goes to puncak" style="width:100%; border-radius:12px; margin-bottom:15px;">
         
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img src="mlupuncak.jpg" onerror="this.src='https://placehold.co/600x400?text=No+Image'" style="width:100%; border-radius:12px;">
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 3</div>
+                <img src="kodarmlu.jpg" style="width:100%; border-radius:12px;">
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 3</div>
+                <img src="https://images.unsplash.com/photo-1566008885218-90abf9200ddb?auto=format&fit=crop&w=600&q=80" style="width:100%; border-radius:12px;">
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+        </div>
+        <br>
+        <div style="text-align:center; margin-bottom:10px;">
+          <span class="dot" onclick="currentSlide(1)"></span> 
+          <span class="dot" onclick="currentSlide(2)"></span> 
+          <span class="dot" onclick="currentSlide(3)"></span> 
+        </div>
         <h4>Rencana Kopdar MLU </h4>
         <p> MLU Goes to Puncak ... </p>
         <p>Kopdar ke 3 MLU Goes to Puncak 29-30 November 2025, silahkan daftarkan diri kalian di group WA MLU </p>
@@ -348,7 +269,7 @@
   <div id="toastNotification"></div>
 
   <script>
-    // DATA LOKASI (SUDAH DIKELOMPOKKAN DENGAN KOTA)
+    // DATA LOKASI
     const chargers = [
       // JAKARTA UTARA
       { name: "Kelapa Gading", city: "Jakarta Utara", lat: -6.171583, lng: 106.899884, link: "https://maps.app.goo.gl/TKfjDuwrEFU2tHoF9", type: "Fast", nozzles: 3, hours: "24 jam 7/7", cost: "Gratis" },
@@ -511,6 +432,60 @@
       });
     }
 
+    // --- LOGIC SLIDESHOW ---
+    let slideIndex = 1;
+    let slideTimer;
+
+    // Fungsi global agar bisa diakses dari HTML onclick
+    window.plusSlides = function(n) {
+      clearInterval(slideTimer);
+      showSlides(slideIndex += n);
+      startAutoSlide();
+    }
+
+    window.currentSlide = function(n) {
+      clearInterval(slideTimer);
+      showSlides(slideIndex = n);
+      startAutoSlide();
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (slides.length === 0) return;
+
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      
+      slides[slideIndex-1].style.display = "block";  
+      if(dots.length > 0) dots[slideIndex-1].className += " active";
+    }
+
+    function startAutoSlide() {
+        if(slideTimer) clearInterval(slideTimer);
+        slideTimer = setInterval(() => { 
+            // Cek dulu apakah artikel sedang dibuka
+            const overlay = document.getElementById('articleOverlay');
+            if(overlay && overlay.style.display === 'flex') {
+                // Cek apakah slide manual sedang aktif, kalau ya, panggil fungsi internal
+                let slides = document.getElementsByClassName("mySlides");
+                if(slides.length > 0) {
+                    slideIndex++;
+                    if (slideIndex > slides.length) slideIndex = 1;
+                    showSlides(slideIndex);
+                }
+            }
+        }, 3000); 
+    }
+
     const themeBtn = document.getElementById('themeToggle');
     themeBtn.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
@@ -529,8 +504,16 @@
     const articleOverlay = document.getElementById('articleOverlay');
     const closeArticle = document.getElementById('closeArticle');
     
-    const openArticle = () => articleOverlay.style.display = 'flex';
-    const closeArticleFunc = () => articleOverlay.style.display = 'none';
+    const openArticle = () => {
+        articleOverlay.style.display = 'flex';
+        // Init slideshow saat dibuka agar tidak blank
+        showSlides(slideIndex);
+        startAutoSlide();
+    };
+    const closeArticleFunc = () => {
+        articleOverlay.style.display = 'none';
+        clearInterval(slideTimer); // Hemat resource
+    };
 
     articleBtn.addEventListener('click', openArticle);
     breakingNews.addEventListener('click', openArticle);
@@ -581,8 +564,8 @@
           findBtn.click();
       };
 
-      if(!localStorage.getItem('mlu_v7')) document.getElementById('welcomeOverlay').style.display='flex';
-      localStorage.setItem('mlu_v7','1');
+      if(!localStorage.getItem('mlu_v8')) document.getElementById('welcomeOverlay').style.display='flex';
+      localStorage.setItem('mlu_v8','1');
 
       renderCards(chargers);
     });
